@@ -287,8 +287,46 @@ a:focus-visible,
   color: var(--orange);
 }
 
-.sound-toggle {
+.header-controls {
+  display: flex;
+  align-items: center;
   justify-self: end;
+  gap: 9px;
+}
+
+.language-switch {
+  display: flex;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.language-switch__option {
+  display: grid;
+  width: 34px;
+  height: 32px;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  filter: grayscale(1);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.language-switch__option + .language-switch__option {
+  border-left: 1px solid var(--line);
+}
+
+.language-switch__option:hover,
+.language-switch__option[aria-pressed='true'] {
+  background: rgb(247 147 26 / 0.13);
+  filter: none;
+  opacity: 1;
+}
+
+.sound-toggle {
   border: 1px solid var(--line);
   padding: 8px 10px;
   background: var(--panel);
@@ -1079,11 +1117,16 @@ main,
   margin-top: 24px;
 }
 
+.about__values-title {
+  color: var(--orange) !important;
+  font-weight: 600;
+}
+
 .principles {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 8px;
-  margin: 38px 0 0;
+  margin: 18px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -1092,7 +1135,7 @@ main,
   border-top: 2px solid var(--line);
   padding: 15px 5px 0 0;
   color: var(--cream);
-  font-size: 0.76rem;
+  font-size: 0.7rem;
 }
 
 .principles span {
@@ -1100,6 +1143,10 @@ main,
   margin-bottom: 8px;
   color: var(--orange);
   font-size: 0.62rem;
+}
+
+.principles b {
+  font-weight: 400;
 }
 
 .contact {
@@ -1241,6 +1288,10 @@ main,
   .about__portrait {
     width: min(300px, 85%);
   }
+
+  .principles {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 620px) {
@@ -1256,6 +1307,18 @@ main,
 
   .brand > span:last-child {
     display: none;
+  }
+
+  .header-controls {
+    gap: 6px;
+  }
+
+  .language-switch__option {
+    width: 31px;
+  }
+
+  .sound-toggle {
+    padding-inline: 8px;
   }
 
   .hero {
@@ -1335,6 +1398,30 @@ main,
   .contact {
     align-items: flex-start;
     flex-direction: column;
+    gap: 32px;
+    padding: 30px 22px;
+    box-shadow: 6px 6px 0 #080503;
+  }
+
+  .contact h2 {
+    font-size: clamp(1.05rem, 5.8vw, 1.5rem);
+    white-space: nowrap;
+  }
+
+  .contact__links {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .contact__links .pixel-button {
+    width: 100%;
+  }
+
+  .contact__link {
+    width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .contact__signal {

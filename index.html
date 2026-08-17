@@ -12,17 +12,17 @@
     <title>Fierillolandia | Código, Bitcoin y libertad</title>
   </head>
   <body>
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <a class="skip-link" href="#contenido" data-i18n="skipLink">Saltar al contenido</a>
 
     <div class="boot-screen" id="boot-screen" role="dialog" aria-modal="true" aria-labelledby="boot-title">
       <div class="boot-screen__noise" aria-hidden="true"></div>
       <div class="boot-terminal">
         <p class="boot-terminal__label">FIERILLO OS v1.0</p>
         <h1 id="boot-title">FIERILLOLANDIA</h1>
-        <p class="boot-terminal__status" id="boot-status">Sistema listo<span aria-hidden="true">_</span></p>
+        <p class="boot-terminal__status" id="boot-status"><span data-i18n="bootReady">Sistema listo</span><span aria-hidden="true">_</span></p>
         <div class="boot-terminal__actions">
-          <button class="pixel-button" type="button" data-enter="sound">Entrar con sonido</button>
-          <button class="text-button" type="button" data-enter="silent">Entrar en silencio</button>
+          <button class="pixel-button" type="button" data-enter="sound" data-i18n="enterSound">Entrar con sonido</button>
+          <button class="text-button" type="button" data-enter="silent" data-i18n="enterSilent">Entrar en silencio</button>
         </div>
       </div>
     </div>
@@ -38,37 +38,43 @@
       <div class="scanlines" aria-hidden="true"></div>
 
       <header class="site-header">
-        <a class="brand" href="#inicio" aria-label="Fierillolandia, inicio">
+        <a class="brand" href="#inicio" aria-label="Fierillolandia, inicio" data-i18n-aria-label="brandHome">
           <span class="brand__coin" aria-hidden="true">₿</span>
           <span>FIERILLOLANDIA</span>
         </a>
-        <nav class="main-nav" aria-label="Navegación principal">
-          <a href="#proyectos">Proyectos</a>
-          <a href="#sobre-mi">Sobre mí</a>
-          <a href="#contacto">Contacto</a>
+        <nav class="main-nav" aria-label="Navegación principal" data-i18n-aria-label="mainNavigation">
+          <a href="#proyectos" data-i18n="navProjects">Proyectos</a>
+          <a href="#sobre-mi" data-i18n="navAbout">Sobre mí</a>
+          <a href="#contacto" data-i18n="navContact">Contacto</a>
         </nav>
-        <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false">
-          <span class="sound-toggle__icon" aria-hidden="true">♪</span>
-          <span class="sound-toggle__text">Sonido: off</span>
-        </button>
+        <div class="header-controls">
+          <div class="language-switch" role="group" aria-label="Idioma" data-i18n-aria-label="languageSelector">
+            <button class="language-switch__option" type="button" data-language="es" aria-pressed="true" aria-label="Español" data-i18n-aria-label="spanishLanguage">🇦🇷</button>
+            <button class="language-switch__option" type="button" data-language="en" aria-pressed="false" aria-label="Inglés" data-i18n-aria-label="englishLanguage">🇺🇸</button>
+          </div>
+          <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false">
+            <span class="sound-toggle__icon" aria-hidden="true">♪</span>
+            <span class="sound-toggle__text">Sonido: off</span>
+          </button>
+        </div>
       </header>
 
       <main id="contenido">
         <section class="hero" id="inicio" aria-labelledby="hero-title">
           <div class="hero__copy reveal">
-            <p class="eyebrow"><span aria-hidden="true">&gt;</span> BIENVENIDO, VIAJERO</p>
-            <h2 id="hero-title">Código, Bitcoin<br />y <span>libertad.</span></h2>
-            <p class="hero__intro">
+            <p class="eyebrow"><span aria-hidden="true">&gt;</span> <span data-i18n="heroEyebrow">BIENVENIDO, VIAJERO</span></p>
+            <h2 id="hero-title" data-i18n-html="heroTitle">Código, Bitcoin<br />y <span>libertad.</span></h2>
+            <p class="hero__intro" data-i18n="heroIntro">
               Soy Fierillo: bitcoiner, libertario y desarrollador autodidacta. Construyo herramientas por
               curiosidad, utilidad y soberanía.
             </p>
             <div class="hero__actions">
-              <a class="pixel-button sound-link" href="#proyectos">Explorar proyectos</a>
-              <a class="text-link sound-link" href="#sobre-mi">Conocer al creador <span aria-hidden="true">→</span></a>
+              <a class="pixel-button sound-link" href="#proyectos" data-i18n="exploreProjects">Explorar proyectos</a>
+              <a class="text-link sound-link" href="#sobre-mi"><span data-i18n="meetCreator">Conocer al creador</span> <span aria-hidden="true">→</span></a>
             </div>
           </div>
 
-          <div class="hero__scene reveal" aria-label="Oso desarrollador construyendo software en pixel art">
+          <div class="hero__scene reveal" aria-label="Oso desarrollador construyendo software en pixel art" data-i18n-aria-label="heroSceneLabel">
             <div class="moon"><span>₿</span></div>
             <div class="cloud cloud--one"></div>
             <div class="cloud cloud--two"></div>
@@ -87,15 +93,15 @@
                 <div class="workbench"><i></i><i></i></div>
               </div>
             </div>
-            <div class="hero__scene-label"><span class="status-dot"></span> NODO ACTIVO · BLOQUE <span id="block-number">000000</span></div>
+            <div class="hero__scene-label"><span class="status-dot"></span> <span data-i18n="nodeStatus">NODO ACTIVO · BLOQUE</span> <span id="block-number">000000</span></div>
           </div>
         </section>
 
         <section class="projects section" id="proyectos" aria-labelledby="projects-title">
           <div class="section-heading reveal">
-            <p class="eyebrow">SELECCIÓN DE MISIONES</p>
-            <h2 id="projects-title">Proyectos principales</h2>
-            <p>Tres artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.</p>
+            <p class="eyebrow" data-i18n="projectsEyebrow">SELECCIÓN DE MISIONES</p>
+            <h2 id="projects-title" data-i18n="projectsTitle">Proyectos principales</h2>
+            <p data-i18n="projectsIntro">Tres artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.</p>
           </div>
 
           <div class="project-grid">
@@ -106,13 +112,13 @@
               </div>
               <div class="project-card__body">
                 <h3>Monitorcillo</h3>
-                <p>Monitor macroeconómico de Argentina que reúne datos oficiales del BCRA, INDEC y MECON en tablas y gráficos comparables.</p>
-                <ul class="project-card__stack" aria-label="Tecnologías de Monitorcillo">
+                <p data-i18n="monitorDescription">Monitor macroeconómico de Argentina que reúne datos oficiales del BCRA, INDEC y MECON en tablas y gráficos comparables.</p>
+                <ul class="project-card__stack" aria-label="Tecnologías de Monitorcillo" data-i18n-aria-label="monitorTechnologies">
                   <li>Next.js</li><li>TypeScript</li><li>Neon</li>
                 </ul>
                 <div class="project-card__links">
-                  <a class="project-card__cta sound-link" href="https://monitorcillo.vercel.app" target="_blank" rel="noreferrer">Ver proyecto <span aria-hidden="true">↗</span></a>
-                  <a class="project-card__code sound-link" href="https://github.com/Fierillo/monitorcillo" target="_blank" rel="noreferrer">Código</a>
+                  <a class="project-card__cta sound-link" href="https://monitorcillo.vercel.app" target="_blank" rel="noreferrer"><span data-i18n="viewProject">Ver proyecto</span> <span aria-hidden="true">↗</span></a>
+                  <a class="project-card__code sound-link" href="https://github.com/Fierillo/monitorcillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
                 </div>
               </div>
             </article>
@@ -125,13 +131,13 @@
               </div>
               <div class="project-card__body">
                 <h3>Futbolcillo</h3>
-                <p>Juego de fútbol 2D por turnos con física estilo pool, entrenamiento local, desafíos vía Nostr y partidas multijugador.</p>
-                <ul class="project-card__stack" aria-label="Tecnologías de Futbolcillo">
+                <p data-i18n="footballDescription">Juego de fútbol 2D por turnos con física estilo pool, entrenamiento local, desafíos vía Nostr y partidas multijugador.</p>
+                <ul class="project-card__stack" aria-label="Tecnologías de Futbolcillo" data-i18n-aria-label="footballTechnologies">
                   <li>React</li><li>Canvas</li><li>Nostr</li>
                 </ul>
                 <div class="project-card__links">
-                  <a class="project-card__cta sound-link" href="https://futbolcillo.vercel.app" target="_blank" rel="noreferrer">Jugar ahora <span aria-hidden="true">↗</span></a>
-                  <a class="project-card__code sound-link" href="https://github.com/Fierillo/Futbolcillo" target="_blank" rel="noreferrer">Código</a>
+                  <a class="project-card__cta sound-link" href="https://futbolcillo.vercel.app" target="_blank" rel="noreferrer"><span data-i18n="playNow">Jugar ahora</span> <span aria-hidden="true">↗</span></a>
+                  <a class="project-card__code sound-link" href="https://github.com/Fierillo/Futbolcillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
                 </div>
               </div>
             </article>
@@ -143,13 +149,13 @@
               </div>
               <div class="project-card__body">
                 <h3>Satoshillo</h3>
-                <p>Extensión que detecta precios en ARS, USD, EUR y JPY en cualquier web y muestra su valor en satoshis en tiempo real.</p>
-                <ul class="project-card__stack" aria-label="Tecnologías de Satoshillo">
+                <p data-i18n="satsDescription">Extensión que detecta precios en ARS, USD, EUR y JPY en cualquier web y muestra su valor en satoshis en tiempo real.</p>
+                <ul class="project-card__stack" aria-label="Tecnologías de Satoshillo" data-i18n-aria-label="satsTechnologies">
                   <li>JavaScript</li><li>Manifest V3</li><li>Bitcoin</li>
                 </ul>
                 <div class="project-card__links">
-                  <a class="project-card__cta sound-link" href="https://github.com/Fierillo/satoshillo/releases/latest" target="_blank" rel="noreferrer">Descargar <span aria-hidden="true">↗</span></a>
-                  <a class="project-card__code sound-link" href="https://github.com/Fierillo/satoshillo" target="_blank" rel="noreferrer">Código</a>
+                  <a class="project-card__cta sound-link" href="https://github.com/Fierillo/satoshillo/releases/latest" target="_blank" rel="noreferrer"><span data-i18n="download">Descargar</span> <span aria-hidden="true">↗</span></a>
+                  <a class="project-card__code sound-link" href="https://github.com/Fierillo/satoshillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
                 </div>
               </div>
             </article>
@@ -166,7 +172,7 @@
               <span id="more-projects-label">+ Más proyectos</span>
             </button>
             <div class="more-projects__panel" id="other-projects" hidden>
-              <p class="more-projects__status" id="projects-status" role="status" aria-live="polite">Conectando con GitHub...</p>
+              <p class="more-projects__status" id="projects-status" role="status" aria-live="polite" data-state="loading">Conectando con GitHub...</p>
               <div class="repo-list" id="repo-list"></div>
             </div>
           </div>
@@ -175,33 +181,37 @@
         <section class="about section" id="sobre-mi" aria-labelledby="about-title">
           <div class="about__portrait reveal">
             <div class="portrait-frame">
-              <img src="https://avatars.githubusercontent.com/u/31271916?v=4" alt="Avatar de Fierillo: un oso en pixel art" width="460" height="460" />
+              <img src="https://avatars.githubusercontent.com/u/31271916?v=4" alt="Avatar de Fierillo: un oso en pixel art" width="460" height="460" data-i18n-alt="avatarAlt" />
             </div>
             <p>PLAYER_01 // FIERILLO</p>
           </div>
           <div class="about__copy reveal">
-            <p class="eyebrow">ARCHIVO DEL CREADOR</p>
-            <h2 id="about-title">Aprender, construir,<br /><span>compartir.</span></h2>
-            <p>
-              Llegué al desarrollo por cuenta propia, siguiendo problemas reales y la necesidad de comprender cómo
-              funcionan las cosas. Bitcoin reforzó esa búsqueda: herramientas abiertas, reglas claras y soberanía individual.
+            <p class="eyebrow" data-i18n="aboutEyebrow">ARCHIVO DEL CREADOR</p>
+            <h2 id="about-title" data-i18n-html="aboutTitle">Aprender, construir,<br /><span>compartir.</span></h2>
+            <p data-i18n="aboutFirst">
+              Con un background como estudiante de ingeniería, tengo el pragmatismo y la construcción en la sangre.
             </p>
-            <p>
-              Fierillolandia es el punto de encuentro de ese recorrido: experimentos, productos y código en evolución constante.
+            <p data-i18n="aboutSecond">
+              El liberalismo y Bitcoin me señalaron el lugar donde quiero edificar; luego me hice dev de forma autodidacta
+              y gracias a la IA pude alcanzar nuevas cotas de creatividad.
             </p>
-            <ul class="principles" aria-label="Principios">
-              <li><span>01</span>Soberanía</li>
-              <li><span>02</span>Código abierto</li>
-              <li><span>03</span>Curiosidad</li>
+            <p data-i18n="aboutThird">Fierillolandia es el lugar donde comparto todo lo que voy creando.</p>
+            <p class="about__values-title" data-i18n="valuesTitle">Mis valores son:</p>
+            <ul class="principles" aria-label="Mis valores" data-i18n-aria-label="valuesLabel">
+              <li><span>01</span><b data-i18n="honesty">Honestidad</b></li>
+              <li><span>02</span><b data-i18n="minimalism">Minimalismo</b></li>
+              <li><span>03</span><b data-i18n="liberalism">Liberalismo</b></li>
+              <li><span>04</span><b data-i18n="humility">Humildad</b></li>
+              <li><span>05</span><b data-i18n="curiosity">Curiosidad</b></li>
             </ul>
           </div>
         </section>
 
         <section class="contact section reveal" id="contacto" aria-labelledby="contact-title">
           <div>
-            <p class="eyebrow">CANAL DE COMUNICACIÓN</p>
-            <h2 id="contact-title">¿Construimos algo?</h2>
-            <p>Encontrá mis proyectos abiertos o escribime por cualquiera de estos canales.</p>
+            <p class="eyebrow" data-i18n="contactEyebrow">CANAL DE COMUNICACIÓN</p>
+            <h2 id="contact-title" data-i18n="contactTitle">¿Construimos algo?</h2>
+            <p data-i18n="contactDescription">Encontrá mis proyectos abiertos o escribime por cualquiera de estos canales.</p>
             <div class="contact__links">
               <a class="pixel-button sound-link" href="https://github.com/Fierillo" target="_blank" rel="noreferrer">GitHub</a>
               <a class="contact__link sound-link" href="https://twitter.com/fierillo" target="_blank" rel="noreferrer">Twitter / @fierillo <span aria-hidden="true">↗</span></a>
@@ -213,8 +223,8 @@
       </main>
 
       <footer class="site-footer">
-        <p>Hecho píxel a píxel en Fierillolandia.</p>
-        <p><span class="status-dot"></span> SISTEMA ONLINE · <span id="current-year"></span></p>
+        <p data-i18n="footerMade">Hecho píxel a píxel en Fierillolandia.</p>
+        <p><span class="status-dot"></span> <span data-i18n="systemOnline">SISTEMA ONLINE</span> · <span id="current-year"></span></p>
       </footer>
     </div>
 

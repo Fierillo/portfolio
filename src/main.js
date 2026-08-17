@@ -1,5 +1,138 @@
 import './styles.css';
 
+const translations = {
+  es: {
+    metaTitle: 'Fierillolandia | Código, Bitcoin y libertad',
+    metaDescription: 'Fierillolandia: proyectos, código y Bitcoin desde el rincón digital de un desarrollador autodidacta.',
+    skipLink: 'Saltar al contenido',
+    bootReady: 'Sistema listo',
+    enterSound: 'Entrar con sonido',
+    enterSilent: 'Entrar en silencio',
+    brandHome: 'Fierillolandia, inicio',
+    mainNavigation: 'Navegación principal',
+    navProjects: 'Proyectos',
+    navAbout: 'Sobre mí',
+    navContact: 'Contacto',
+    languageSelector: 'Idioma',
+    spanishLanguage: 'Español',
+    englishLanguage: 'Inglés',
+    soundOn: 'Sonido: on',
+    soundOff: 'Sonido: off',
+    heroEyebrow: 'BIENVENIDO, VIAJERO',
+    heroTitle: 'Código, Bitcoin<br />y <span>libertad.</span>',
+    heroIntro: 'Soy Fierillo: bitcoiner, libertario y desarrollador autodidacta. Construyo herramientas por curiosidad, utilidad y soberanía.',
+    exploreProjects: 'Explorar proyectos',
+    meetCreator: 'Conocer al creador',
+    heroSceneLabel: 'Oso desarrollador construyendo software en pixel art',
+    nodeStatus: 'NODO ACTIVO · BLOQUE',
+    projectsEyebrow: 'SELECCIÓN DE MISIONES',
+    projectsTitle: 'Proyectos principales',
+    projectsIntro: 'Tres artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.',
+    monitorDescription: 'Monitor macroeconómico de Argentina que reúne datos oficiales del BCRA, INDEC y MECON en tablas y gráficos comparables.',
+    monitorTechnologies: 'Tecnologías de Monitorcillo',
+    footballDescription: 'Juego de fútbol 2D por turnos con física estilo pool, entrenamiento local, desafíos vía Nostr y partidas multijugador.',
+    footballTechnologies: 'Tecnologías de Futbolcillo',
+    satsDescription: 'Extensión que detecta precios en ARS, USD, EUR y JPY en cualquier web y muestra su valor en satoshis en tiempo real.',
+    satsTechnologies: 'Tecnologías de Satoshillo',
+    viewProject: 'Ver proyecto',
+    playNow: 'Jugar ahora',
+    download: 'Descargar',
+    code: 'Código',
+    moreProjects: '+ Más proyectos',
+    hideProjects: '− Ocultar proyectos',
+    githubLoading: 'Conectando con GitHub...',
+    githubError: 'No se pudo cargar la lista. Podés ver todos los proyectos directamente en GitHub.',
+    githubFallback: 'Abrir repositorios ↗',
+    publicRepo: 'REPO PÚBLICO',
+    archivedRepo: 'ARCHIVADO',
+    codeFallback: 'Código',
+    emptyDescription: 'Proyecto abierto disponible en GitHub.',
+    avatarAlt: 'Avatar de Fierillo: un oso en pixel art',
+    aboutEyebrow: 'ARCHIVO DEL CREADOR',
+    aboutTitle: 'Aprender, construir,<br /><span>compartir.</span>',
+    aboutFirst: 'Con un background como estudiante de ingeniería, tengo el pragmatismo y la construcción en la sangre.',
+    aboutSecond: 'El liberalismo y Bitcoin me señalaron el lugar donde quiero edificar; luego me hice dev de forma autodidacta y gracias a la IA pude alcanzar nuevas cotas de creatividad.',
+    aboutThird: 'Fierillolandia es el lugar donde comparto todo lo que voy creando.',
+    valuesTitle: 'Mis valores son:',
+    valuesLabel: 'Mis valores',
+    honesty: 'Honestidad',
+    minimalism: 'Minimalismo',
+    liberalism: 'Liberalismo',
+    humility: 'Humildad',
+    curiosity: 'Curiosidad',
+    contactEyebrow: 'CANAL DE COMUNICACIÓN',
+    contactTitle: '¿Construimos algo?',
+    contactDescription: 'Encontrá mis proyectos abiertos o escribime por cualquiera de estos canales.',
+    footerMade: 'Hecho píxel a píxel en Fierillolandia.',
+    systemOnline: 'SISTEMA ONLINE',
+  },
+  en: {
+    metaTitle: 'Fierillolandia | Code, Bitcoin, and freedom',
+    metaDescription: 'Fierillolandia: projects, code, and Bitcoin from the digital corner of a self-taught developer.',
+    skipLink: 'Skip to content',
+    bootReady: 'System ready',
+    enterSound: 'Enter with sound',
+    enterSilent: 'Enter silently',
+    brandHome: 'Fierillolandia, home',
+    mainNavigation: 'Main navigation',
+    navProjects: 'Projects',
+    navAbout: 'About me',
+    navContact: 'Contact',
+    languageSelector: 'Language',
+    spanishLanguage: 'Spanish',
+    englishLanguage: 'English',
+    soundOn: 'Sound: on',
+    soundOff: 'Sound: off',
+    heroEyebrow: 'WELCOME, TRAVELER',
+    heroTitle: 'Code, Bitcoin<br />and <span>freedom.</span>',
+    heroIntro: 'I am Fierillo: a Bitcoiner, libertarian, and self-taught developer. I build tools driven by curiosity, usefulness, and sovereignty.',
+    exploreProjects: 'Explore projects',
+    meetCreator: 'Meet the creator',
+    heroSceneLabel: 'Pixel-art developer bear building software',
+    nodeStatus: 'ACTIVE NODE · BLOCK',
+    projectsEyebrow: 'MISSION SELECTION',
+    projectsTitle: 'Featured projects',
+    projectsIntro: 'Three artifacts built in Fierillolandia. Choose one to begin exploring.',
+    monitorDescription: 'An Argentine macroeconomic monitor that brings official BCRA, INDEC, and MECON data into comparable tables and charts.',
+    monitorTechnologies: 'Monitorcillo technologies',
+    footballDescription: 'A turn-based 2D football game with pool-style physics, local training, Nostr challenges, and multiplayer matches.',
+    footballTechnologies: 'Futbolcillo technologies',
+    satsDescription: 'A browser extension that detects ARS, USD, EUR, and JPY prices on any website and displays their real-time value in satoshis.',
+    satsTechnologies: 'Satoshillo technologies',
+    viewProject: 'View project',
+    playNow: 'Play now',
+    download: 'Download',
+    code: 'Code',
+    moreProjects: '+ More projects',
+    hideProjects: '− Hide projects',
+    githubLoading: 'Connecting to GitHub...',
+    githubError: 'The list could not be loaded. You can view every project directly on GitHub.',
+    githubFallback: 'Open repositories ↗',
+    publicRepo: 'PUBLIC REPO',
+    archivedRepo: 'ARCHIVED',
+    codeFallback: 'Code',
+    emptyDescription: 'Open project available on GitHub.',
+    avatarAlt: 'Fierillo avatar: a pixel-art bear',
+    aboutEyebrow: 'CREATOR FILE',
+    aboutTitle: 'Learn, build,<br /><span>share.</span>',
+    aboutFirst: 'With a background as an engineering student, pragmatism and building are in my blood.',
+    aboutSecond: 'Liberalism and Bitcoin showed me where I want to build; I then became a self-taught developer, and AI helped me reach new heights of creativity.',
+    aboutThird: 'Fierillolandia is where I share everything I create.',
+    valuesTitle: 'My values are:',
+    valuesLabel: 'My values',
+    honesty: 'Honesty',
+    minimalism: 'Minimalism',
+    liberalism: 'Liberalism',
+    humility: 'Humility',
+    curiosity: 'Curiosity',
+    contactEyebrow: 'COMMUNICATION CHANNEL',
+    contactTitle: 'Shall we build?',
+    contactDescription: 'Find my open projects or reach out through any of these channels.',
+    footerMade: 'Built pixel by pixel in Fierillolandia.',
+    systemOnline: 'SYSTEM ONLINE',
+  },
+};
+
 const bootScreen = document.querySelector('#boot-screen');
 const siteShell = document.querySelector('#site-shell');
 const soundToggle = document.querySelector('#sound-toggle');
@@ -12,10 +145,15 @@ const moreProjectsLabel = document.querySelector('#more-projects-label');
 const otherProjects = document.querySelector('#other-projects');
 const projectsStatus = document.querySelector('#projects-status');
 const repoList = document.querySelector('#repo-list');
+const languageButtons = document.querySelectorAll('[data-language]');
+const metaDescription = document.querySelector('meta[name="description"]');
 
 let audioContext;
 let soundEnabled = false;
 let projectsLoaded = false;
+let loadedRepos = [];
+let projectsState = 'idle';
+let currentLanguage = localStorage.getItem('fierillolandia-language') === 'en' ? 'en' : 'es';
 
 function getAudioContext() {
   if (!audioContext) {
@@ -71,9 +209,70 @@ function playProjectSound(project) {
 }
 
 function updateSoundButton() {
+  const text = translations[currentLanguage];
   soundToggle.setAttribute('aria-pressed', String(soundEnabled));
-  soundLabel.textContent = `Sonido: ${soundEnabled ? 'on' : 'off'}`;
+  soundLabel.textContent = soundEnabled ? text.soundOn : text.soundOff;
   localStorage.setItem('fierillolandia-sound', String(soundEnabled));
+}
+
+function updateMoreProjectsLabel() {
+  const expanded = moreProjectsToggle.getAttribute('aria-expanded') === 'true';
+  const text = translations[currentLanguage];
+  moreProjectsLabel.textContent = expanded ? text.hideProjects : text.moreProjects;
+}
+
+function renderProjectExplorer() {
+  const text = translations[currentLanguage];
+
+  if (projectsState === 'loaded') {
+    projectsStatus.hidden = true;
+    repoList.replaceChildren(...loadedRepos.map(createRepoCard));
+    return;
+  }
+
+  projectsStatus.hidden = false;
+  projectsStatus.dataset.state = projectsState;
+  projectsStatus.textContent = projectsState === 'error' ? text.githubError : text.githubLoading;
+
+  if (projectsState === 'error') {
+    const fallback = document.createElement('a');
+    fallback.className = 'repo-list__fallback';
+    fallback.href = 'https://github.com/Fierillo?tab=repositories';
+    fallback.target = '_blank';
+    fallback.rel = 'noreferrer';
+    fallback.textContent = text.githubFallback;
+    repoList.replaceChildren(fallback);
+  }
+}
+
+function applyLanguage(language) {
+  currentLanguage = language;
+  const text = translations[language];
+
+  document.documentElement.lang = language;
+  document.title = text.metaTitle;
+  metaDescription.content = text.metaDescription;
+  localStorage.setItem('fierillolandia-language', language);
+
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    element.textContent = text[element.dataset.i18n];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach((element) => {
+    element.innerHTML = text[element.dataset.i18nHtml];
+  });
+  document.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
+    element.setAttribute('aria-label', text[element.dataset.i18nAriaLabel]);
+  });
+  document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
+    element.alt = text[element.dataset.i18nAlt];
+  });
+  languageButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', String(button.dataset.language === language));
+  });
+
+  updateSoundButton();
+  updateMoreProjectsLabel();
+  renderProjectExplorer();
 }
 
 function enterSite(withSound) {
@@ -97,6 +296,10 @@ soundToggle.addEventListener('click', () => {
   if (soundEnabled) playTone(620, 0.12, 'square', 0.035);
 });
 
+languageButtons.forEach((button) => {
+  button.addEventListener('click', () => applyLanguage(button.dataset.language));
+});
+
 interactiveElements.forEach((element) => {
   element.addEventListener('pointerenter', () => {
     if (!element.closest('.project-card')) playTone(300, 0.035, 'square', 0.012);
@@ -109,6 +312,7 @@ projectCards.forEach((card) => {
 });
 
 function createRepoCard(repo) {
+  const text = translations[currentLanguage];
   const link = document.createElement('a');
   const heading = document.createElement('div');
   const name = document.createElement('h3');
@@ -125,9 +329,9 @@ function createRepoCard(repo) {
 
   heading.className = 'repo-card__heading';
   name.textContent = repo.name;
-  language.textContent = repo.language || 'Código';
-  description.textContent = repo.description || 'Proyecto abierto disponible en GitHub.';
-  meta.textContent = `${repo.archived ? 'ARCHIVADO' : 'REPO PÚBLICO'} · ${new Date(repo.pushed_at).getFullYear()} ↗`;
+  language.textContent = repo.language || text.codeFallback;
+  description.textContent = repo.description || text.emptyDescription;
+  meta.textContent = `${repo.archived ? text.archivedRepo : text.publicRepo} · ${new Date(repo.pushed_at).getFullYear()} ↗`;
 
   heading.append(name, language);
   link.append(heading, description, meta);
@@ -135,38 +339,31 @@ function createRepoCard(repo) {
 }
 
 async function loadMoreProjects() {
-  projectsStatus.hidden = false;
-  projectsStatus.textContent = 'Conectando con GitHub...';
+  projectsState = 'loading';
+  renderProjectExplorer();
 
   try {
     const response = await fetch('https://api.github.com/users/Fierillo/repos?per_page=100&sort=updated');
     if (!response.ok) throw new Error(`GitHub respondió ${response.status}`);
 
     const featured = new Set(['monitorcillo', 'futbolcillo', 'satoshillo', 'fierillo']);
-    const repos = (await response.json()).filter(
+    loadedRepos = (await response.json()).filter(
       (repo) => !repo.fork && !featured.has(repo.name.toLowerCase()),
     );
 
-    repoList.replaceChildren(...repos.map(createRepoCard));
-    projectsStatus.hidden = true;
+    projectsState = 'loaded';
     projectsLoaded = true;
+    renderProjectExplorer();
   } catch {
-    projectsStatus.textContent = 'No se pudo cargar la lista. Podés ver todos los proyectos directamente en GitHub.';
-
-    const fallback = document.createElement('a');
-    fallback.className = 'repo-list__fallback';
-    fallback.href = 'https://github.com/Fierillo?tab=repositories';
-    fallback.target = '_blank';
-    fallback.rel = 'noreferrer';
-    fallback.textContent = 'Abrir repositorios ↗';
-    repoList.replaceChildren(fallback);
+    projectsState = 'error';
+    renderProjectExplorer();
   }
 }
 
 moreProjectsToggle.addEventListener('click', () => {
   const expanded = moreProjectsToggle.getAttribute('aria-expanded') === 'true';
   moreProjectsToggle.setAttribute('aria-expanded', String(!expanded));
-  moreProjectsLabel.textContent = expanded ? '+ Más proyectos' : '− Ocultar proyectos';
+  updateMoreProjectsLabel();
   otherProjects.hidden = expanded;
 
   if (!expanded && !projectsLoaded) loadMoreProjects();
@@ -186,5 +383,6 @@ const observer = new IntersectionObserver(
 
 document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
 
+applyLanguage(currentLanguage);
 document.querySelector('#current-year').textContent = new Date().getFullYear();
 document.querySelector('#block-number').textContent = String(850000 + Math.floor(Math.random() * 99999));

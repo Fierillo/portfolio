@@ -1124,7 +1124,7 @@ main,
 
 .principles {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   margin: 18px 0 0;
   padding: 0;
@@ -1217,6 +1217,16 @@ main,
   font-size: 0.7rem;
 }
 
+.pixel-heart {
+  display: inline-block;
+  width: 14px;
+  height: 12px;
+  margin-left: 3px;
+  background: var(--orange);
+  clip-path: polygon(0 17%, 14% 17%, 14% 0, 43% 0, 50% 17%, 57% 0, 86% 0, 86% 17%, 100% 17%, 100% 58%, 86% 58%, 86% 75%, 71% 75%, 71% 92%, 57% 92%, 57% 100%, 43% 100%, 43% 92%, 29% 92%, 29% 75%, 14% 75%, 14% 58%, 0 58%);
+  animation: heart-pulse 1.4s steps(2) infinite alternate;
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(25px);
@@ -1242,6 +1252,7 @@ main,
 @keyframes coin-float { to { transform: translateY(-13px); } }
 @keyframes signal { to { opacity: 0.2; } }
 @keyframes repo-open { from { opacity: 0; transform: translateY(-12px); } }
+@keyframes heart-pulse { to { transform: scale(1.2); background: var(--amber); } }
 
 @media (max-width: 900px) {
   .site-header {

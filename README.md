@@ -15,7 +15,7 @@
 
 ## About
 
-Fierillolandia is my personal portfolio and the meeting point for the projects I build as a self-taught developer, Bitcoiner, and libertarian. It reflects the principles behind my work: curiosity, open source, individual sovereignty, and learning by building.
+Fierillolandia is my personal portfolio and the meeting point for the projects I build as a self-taught developer and Bitcoiner. It reflects the principles behind my work: curiosity, open source, individual sovereignty, and learning by building.
 
 The site is designed as a small pixel-art world rather than a conventional portfolio. It includes optional synthesized sound effects, animated scenes, responsive layouts, and a live explorer that retrieves my public repositories from GitHub.
 

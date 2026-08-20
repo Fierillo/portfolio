@@ -100,7 +100,7 @@
           <div class="section-heading reveal">
             <p class="eyebrow" data-i18n="projectsEyebrow">SELECCIÓN DE MISIONES</p>
             <h2 id="projects-title" data-i18n="projectsTitle">Proyectos principales</h2>
-            <p data-i18n="projectsIntro">Tres artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.</p>
+            <p data-i18n="projectsIntro">Cuatro artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.</p>
           </div>
 
           <div class="project-grid">
@@ -144,7 +144,10 @@
             <article class="project-card project-card--sats reveal" data-project-sound="sats">
               <div class="project-card__topline"><span>03</span></div>
               <div class="project-card__art" aria-hidden="true">
-                <div class="coin-stack"><i>₿</i><i>₿</i><i>₿</i></div>
+                <div class="bitcoin-price">
+                  <div class="bitcoin-tile">₿</div>
+                  <span>$ 21.000</span>
+                </div>
               </div>
               <div class="project-card__body">
                 <h3>Satoshillo</h3>
@@ -155,6 +158,26 @@
                 <div class="project-card__links">
                   <a class="project-card__cta sound-link" href="https://github.com/Fierillo/satoshillo/releases/latest" target="_blank" rel="noreferrer"><span data-i18n="download">Descargar</span> <span aria-hidden="true">↗</span></a>
                   <a class="project-card__code sound-link" href="https://github.com/Fierillo/satoshillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card--clip reveal" data-project-sound="clip">
+              <div class="project-card__topline"><span>04</span></div>
+              <div class="project-card__art" aria-hidden="true">
+                <div class="pixel-editor">
+                  <div class="pixel-editor__preview"><i></i><span>CC</span></div>
+                  <div class="pixel-editor__timeline"><i></i><i></i><i></i></div>
+                </div>
+              </div>
+              <div class="project-card__body">
+                <h3>Clipcillo</h3>
+                <p data-i18n="clipDescription">Editor de clips con transcripción automática de subtítulos, detección de silencios y herramientas inteligentes para acelerar la edición.</p>
+                <ul class="project-card__stack" aria-label="Tecnologías de Clipcillo" data-i18n-aria-label="clipTechnologies">
+                  <li>Python</li><li>FastAPI</li><li>Whisper</li>
+                </ul>
+                <div class="project-card__links project-card__links--single">
+                  <a class="project-card__cta sound-link" href="https://github.com/Fierillo/clipcillo" target="_blank" rel="noreferrer"><span data-i18n="viewCode">Ver código</span> <span aria-hidden="true">↗</span></a>
                 </div>
               </div>
             </article>

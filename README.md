@@ -24,6 +24,7 @@ The site is designed as a small pixel-art world rather than a conventional portf
 - [Monitorcillo](https://github.com/Fierillo/monitorcillo): an Argentine macroeconomic monitor built with official data from BCRA, INDEC, and MECON.
 - [Futbolcillo](https://github.com/Fierillo/Futbolcillo): a turn-based 2D football game with pool-style physics, Nostr challenges, and multiplayer matches.
 - [Satoshillo](https://github.com/Fierillo/satoshillo): a browser extension that converts ARS, USD, EUR, and JPY prices into satoshis on any website.
+- [Clipcillo](https://github.com/Fierillo/clipcillo): a clip editor with automatic subtitle transcription, silence detection, and AI-assisted editing tools.
 
 ## Features
 

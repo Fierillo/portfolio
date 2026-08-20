@@ -780,7 +780,7 @@ main,
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
 
@@ -893,30 +893,89 @@ main,
   opacity: 0.55;
 }
 
-.coin-stack {
-  position: relative;
-  width: 130px;
-  height: 130px;
+.bitcoin-price {
+  text-align: center;
 }
 
-.coin-stack i {
-  position: absolute;
+.bitcoin-tile {
   display: grid;
-  width: 72px;
-  height: 72px;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto;
   place-items: center;
-  border: 6px solid #6b3707;
+  border: 8px solid #0b0805;
   background: var(--orange);
-  box-shadow: 7px 7px 0 #0b0805;
+  box-shadow: 8px 8px 0 #67370c;
   color: #5e3107;
-  font-size: 2rem;
-  font-style: normal;
+  font-size: 3.2rem;
   font-weight: 600;
+  animation: bitcoin-glow 1.8s steps(3) infinite alternate;
 }
 
-.coin-stack i:nth-child(1) { bottom: 0; left: 2px; }
-.coin-stack i:nth-child(2) { right: 0; bottom: 13px; }
-.coin-stack i:nth-child(3) { top: 0; left: 28px; animation: coin-float 1.8s steps(4) infinite alternate; }
+.bitcoin-price > span {
+  display: inline-block;
+  margin-top: 18px;
+  border: 5px solid #0b0805;
+  padding: 7px 13px;
+  background: var(--cream);
+  box-shadow: 5px 5px 0 #6b3b14;
+  color: var(--ink);
+  font-family: 'Silkscreen', monospace;
+  font-size: 0.72rem;
+}
+
+.pixel-editor {
+  width: min(230px, 78%);
+  height: 142px;
+  border: 8px solid #0b0805;
+  background: #21170f;
+  box-shadow: 8px 8px 0 #62360f;
+}
+
+.pixel-editor__preview {
+  position: relative;
+  display: grid;
+  height: 86px;
+  place-items: center;
+  border-bottom: 7px solid #0b0805;
+  background: #151b12;
+}
+
+.pixel-editor__preview i {
+  width: 0;
+  height: 0;
+  border-top: 17px solid transparent;
+  border-bottom: 17px solid transparent;
+  border-left: 26px solid var(--orange);
+  filter: drop-shadow(4px 4px 0 #57300e);
+}
+
+.pixel-editor__preview span {
+  position: absolute;
+  right: 7px;
+  bottom: 6px;
+  border: 2px solid var(--cream);
+  padding: 2px 4px;
+  color: var(--cream);
+  font-size: 0.5rem;
+}
+
+.pixel-editor__timeline {
+  display: grid;
+  gap: 6px;
+  padding: 8px 10px;
+}
+
+.pixel-editor__timeline i {
+  display: block;
+  width: 82%;
+  height: 6px;
+  background: var(--orange);
+  animation: timeline-cut 1.6s steps(4) infinite alternate;
+}
+
+.pixel-editor__timeline i:nth-child(2) { width: 58%; margin-left: 21%; animation-delay: 0.3s; }
+.pixel-editor__timeline i:nth-child(3) { width: 34%; animation-delay: 0.6s; }
 
 .project-card__body {
   display: flex;
@@ -961,6 +1020,10 @@ main,
   justify-content: space-between;
   gap: 14px;
   margin-top: auto;
+}
+
+.project-card__links--single {
+  justify-content: flex-start;
 }
 
 .project-card__cta {
@@ -1240,6 +1303,7 @@ main,
 
 .project-card:nth-child(2) { transition-delay: 0.08s; }
 .project-card:nth-child(3) { transition-delay: 0.16s; }
+.project-card:nth-child(4) { transition-delay: 0.24s; }
 
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes twinkle { to { opacity: 0.25; } }
@@ -1249,7 +1313,8 @@ main,
 @keyframes build-block { to { transform: translateY(-16px); } }
 @keyframes meter { to { transform: scaleY(0.45); transform-origin: bottom; } }
 @keyframes bounce { 50% { transform: translateY(-14px) rotate(8deg); } }
-@keyframes coin-float { to { transform: translateY(-13px); } }
+@keyframes bitcoin-glow { to { box-shadow: 8px 8px 0 #67370c, 0 0 22px rgb(247 147 26 / 0.5); } }
+@keyframes timeline-cut { to { transform: scaleX(0.55); transform-origin: left; } }
 @keyframes signal { to { opacity: 0.2; } }
 @keyframes repo-open { from { opacity: 0; transform: translateY(-12px); } }
 @keyframes heart-pulse { to { transform: scale(1.2); background: var(--amber); } }

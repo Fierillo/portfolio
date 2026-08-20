@@ -27,14 +27,17 @@ const translations = {
     nodeStatus: 'NODO ACTIVO · BLOQUE',
     projectsEyebrow: 'SELECCIÓN DE MISIONES',
     projectsTitle: 'Proyectos principales',
-    projectsIntro: 'Tres artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.',
+    projectsIntro: 'Cuatro artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.',
     monitorDescription: 'Monitor macroeconómico de Argentina que reúne datos oficiales del BCRA, INDEC y MECON en tablas y gráficos comparables.',
     monitorTechnologies: 'Tecnologías de Monitorcillo',
     footballDescription: 'Juego de fútbol 2D por turnos con física estilo pool, entrenamiento local, desafíos vía Nostr y partidas multijugador.',
     footballTechnologies: 'Tecnologías de Futbolcillo',
     satsDescription: 'Extensión que detecta precios en ARS, USD, EUR y JPY en cualquier web y muestra su valor en satoshis en tiempo real.',
     satsTechnologies: 'Tecnologías de Satoshillo',
+    clipDescription: 'Editor de clips con transcripción automática de subtítulos, detección de silencios y herramientas inteligentes para acelerar la edición.',
+    clipTechnologies: 'Tecnologías de Clipcillo',
     viewProject: 'Ver proyecto',
+    viewCode: 'Ver código',
     playNow: 'Jugar ahora',
     download: 'Descargar',
     code: 'Código',
@@ -91,14 +94,17 @@ const translations = {
     nodeStatus: 'ACTIVE NODE · BLOCK',
     projectsEyebrow: 'MISSION SELECTION',
     projectsTitle: 'Featured projects',
-    projectsIntro: 'Three artifacts built in Fierillolandia. Choose one to begin exploring.',
+    projectsIntro: 'Four artifacts built in Fierillolandia. Choose one to begin exploring.',
     monitorDescription: 'An Argentine macroeconomic monitor that brings official BCRA, INDEC, and MECON data into comparable tables and charts.',
     monitorTechnologies: 'Monitorcillo technologies',
     footballDescription: 'A turn-based 2D football game with pool-style physics, local training, Nostr challenges, and multiplayer matches.',
     footballTechnologies: 'Futbolcillo technologies',
     satsDescription: 'A browser extension that detects ARS, USD, EUR, and JPY prices on any website and displays their real-time value in satoshis.',
     satsTechnologies: 'Satoshillo technologies',
+    clipDescription: 'A clip editor with automatic subtitle transcription, silence detection, and intelligent tools that speed up the editing workflow.',
+    clipTechnologies: 'Clipcillo technologies',
     viewProject: 'View project',
+    viewCode: 'View code',
     playNow: 'Play now',
     download: 'Download',
     code: 'Code',
@@ -200,6 +206,12 @@ function playProjectSound(project) {
       [880, 0.045, 'square', 0.02, 0],
       [1320, 0.06, 'square', 0.022, 0.045],
       [1760, 0.1, 'triangle', 0.018, 0.1],
+    ],
+    clip: [
+      [520, 0.04, 'square', 0.018, 0],
+      [390, 0.04, 'square', 0.018, 0.05],
+      [520, 0.04, 'square', 0.018, 0.1],
+      [780, 0.08, 'triangle', 0.018, 0.15],
     ],
   };
 
@@ -344,7 +356,7 @@ async function loadMoreProjects() {
     const response = await fetch('https://api.github.com/users/Fierillo/repos?per_page=100&sort=updated');
     if (!response.ok) throw new Error(`GitHub respondió ${response.status}`);
 
-    const featured = new Set(['monitorcillo', 'futbolcillo', 'satoshillo', 'fierillo']);
+    const featured = new Set(['monitorcillo', 'futbolcillo', 'satoshillo', 'clipcillo', 'fierillo']);
     loadedRepos = (await response.json()).filter(
       (repo) => !repo.fork && !featured.has(repo.name.toLowerCase()),
     );

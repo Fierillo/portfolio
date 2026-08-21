@@ -100,7 +100,7 @@
           <div class="section-heading reveal">
             <p class="eyebrow" data-i18n="projectsEyebrow">SELECCIÓN DE MISIONES</p>
             <h2 id="projects-title" data-i18n="projectsTitle">Proyectos principales</h2>
-            <p data-i18n="projectsIntro">Cuatro artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.</p>
+            <p data-i18n="projectsIntro">Cinco artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.</p>
           </div>
 
           <div class="project-grid">
@@ -178,6 +178,54 @@
                 </ul>
                 <div class="project-card__links project-card__links--single">
                   <a class="project-card__cta sound-link" href="https://github.com/Fierillo/clipcillo" target="_blank" rel="noreferrer"><span data-i18n="viewCode">Ver código</span> <span aria-hidden="true">↗</span></a>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card--bot reveal" data-project-sound="bot">
+              <div class="project-card__topline"><span>05</span></div>
+              <div class="project-card__art" aria-hidden="true">
+                <svg class="robot-bear" viewBox="0 0 260 230" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="bot-metal" x1="35" y1="35" x2="220" y2="195" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#c9c2b7" />
+                      <stop offset="0.48" stop-color="#91887e" />
+                      <stop offset="0.5" stop-color="#71685f" />
+                      <stop offset="1" stop-color="#514941" />
+                    </linearGradient>
+                    <filter id="bot-laser-glow" x="-80%" y="-200%" width="260%" height="500%">
+                      <feGaussianBlur stdDeviation="5" result="glow" />
+                      <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
+                    </filter>
+                  </defs>
+                  <ellipse class="robot-bear__shadow" cx="130" cy="216" rx="67" ry="9" />
+                  <g class="robot-bear__head">
+                    <path d="M130 42V16" stroke="#0b0805" stroke-width="10" />
+                    <circle class="robot-bear__antenna-light" cx="130" cy="12" r="8" />
+                    <path class="robot-bear__shell" fill="url(#bot-metal)" d="M84 49C86 29 76 12 58 10C37 8 20 24 20 45C20 59 27 69 40 75V157C40 180 58 195 80 195H180C202 195 220 180 220 157V75C233 69 240 59 240 45C240 24 223 8 202 10C184 12 174 29 176 49C164 43 150 40 130 40C110 40 96 43 84 49Z" />
+                    <circle class="robot-bear__inner-ear" cx="58" cy="43" r="17" />
+                    <circle class="robot-bear__inner-ear" cx="202" cy="43" r="17" />
+                    <path class="robot-bear__panel" d="M130 52V119M53 73L76 64M207 73L184 64" />
+                    <g class="robot-bear__laser-eyes" filter="url(#bot-laser-glow)">
+                      <rect x="67" y="91" width="47" height="14" rx="7" />
+                      <rect x="146" y="91" width="47" height="14" rx="7" />
+                    </g>
+                    <circle class="robot-bear__bolt" cx="57" cy="126" r="6" />
+                    <circle class="robot-bear__bolt" cx="203" cy="126" r="6" />
+                    <rect class="robot-bear__muzzle" x="91" y="124" width="78" height="51" rx="19" />
+                    <path class="robot-bear__nose" d="M116 139H144L138 153H122Z" />
+                    <path class="robot-bear__mouth" d="M130 153V164M117 164H143" />
+                  </g>
+                </svg>
+              </div>
+              <div class="project-card__body">
+                <h3>Botillo</h3>
+                <p data-i18n="botDescription">Bot de Bitcoin para Discord y Telegram que sigue el precio, organiza rondas de predicción, mantiene rankings y procesa pagos Lightning mediante NWC.</p>
+                <ul class="project-card__stack" aria-label="Tecnologías de Botillo" data-i18n-aria-label="botTechnologies">
+                  <li>TypeScript</li><li>Discord</li><li>Telegram</li><li>Lightning</li>
+                </ul>
+                <div class="project-card__links project-card__links--single">
+                  <a class="project-card__cta sound-link" href="https://github.com/Fierillo/botillo" target="_blank" rel="noreferrer"><span data-i18n="viewCode">Ver código</span> <span aria-hidden="true">↗</span></a>
                 </div>
               </div>
             </article>

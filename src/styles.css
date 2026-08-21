@@ -977,6 +977,98 @@ main,
 .pixel-editor__timeline i:nth-child(2) { width: 58%; margin-left: 21%; animation-delay: 0.3s; }
 .pixel-editor__timeline i:nth-child(3) { width: 34%; animation-delay: 0.6s; }
 
+.project-card--bot {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+}
+
+.project-card--bot .project-card__topline {
+  grid-column: 1 / -1;
+}
+
+.project-card--bot .project-card__art {
+  min-height: 270px;
+  height: auto;
+  border-right: 1px solid var(--line);
+  border-bottom: 0;
+}
+
+.robot-bear {
+  width: min(240px, 82%);
+  height: auto;
+  overflow: visible;
+}
+
+.robot-bear__head {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robot-hover 1.8s steps(5) infinite alternate;
+}
+
+.robot-bear__shell {
+  stroke: #0b0805;
+  stroke-linejoin: round;
+  stroke-width: 12;
+}
+
+.robot-bear__inner-ear {
+  fill: #0b0805;
+  stroke: #d0c8bc;
+  stroke-width: 5;
+}
+
+.robot-bear__panel {
+  fill: none;
+  opacity: 0.42;
+  stroke: #0b0805;
+  stroke-linecap: square;
+  stroke-width: 5;
+}
+
+.robot-bear__antenna-light,
+.robot-bear__bolt {
+  fill: var(--orange);
+  stroke: #0b0805;
+  stroke-width: 5;
+}
+
+.robot-bear__antenna-light {
+  animation: robot-blink 0.9s steps(2) infinite alternate;
+}
+
+.robot-bear__laser-eyes {
+  fill: #ff2b1f;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robot-eyes 1.25s steps(3) infinite alternate;
+}
+
+.robot-bear__muzzle {
+  fill: var(--cream);
+  stroke: #0b0805;
+  stroke-width: 7;
+}
+
+.robot-bear__nose {
+  fill: #0b0805;
+}
+
+.robot-bear__mouth {
+  fill: none;
+  stroke: #0b0805;
+  stroke-linecap: square;
+  stroke-width: 6;
+}
+
+.robot-bear__shadow {
+  fill: #080503;
+  opacity: 0.65;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: robot-shadow 1.8s steps(5) infinite alternate;
+}
+
 .project-card__body {
   display: flex;
   flex-direction: column;
@@ -1304,6 +1396,7 @@ main,
 .project-card:nth-child(2) { transition-delay: 0.08s; }
 .project-card:nth-child(3) { transition-delay: 0.16s; }
 .project-card:nth-child(4) { transition-delay: 0.24s; }
+.project-card:nth-child(5) { transition-delay: 0.32s; }
 
 @keyframes blink { 50% { opacity: 0; } }
 @keyframes twinkle { to { opacity: 0.25; } }
@@ -1315,6 +1408,10 @@ main,
 @keyframes bounce { 50% { transform: translateY(-14px) rotate(8deg); } }
 @keyframes bitcoin-glow { to { box-shadow: 8px 8px 0 #67370c, 0 0 22px rgb(247 147 26 / 0.5); } }
 @keyframes timeline-cut { to { transform: scaleX(0.55); transform-origin: left; } }
+@keyframes robot-hover { from { transform: translateY(9px); } to { transform: translateY(-2px); } }
+@keyframes robot-blink { to { fill: var(--amber); opacity: 0.45; } }
+@keyframes robot-eyes { to { opacity: 0.65; transform: scaleX(1.08); } }
+@keyframes robot-shadow { to { opacity: 0.32; transform: scaleX(0.72); } }
 @keyframes signal { to { opacity: 0.2; } }
 @keyframes repo-open { from { opacity: 0; transform: translateY(-12px); } }
 @keyframes heart-pulse { to { transform: scale(1.2); background: var(--amber); } }
@@ -1344,6 +1441,10 @@ main,
   .project-card {
     display: grid;
     grid-template-columns: 0.8fr 1.2fr;
+  }
+
+  .project-card--bot {
+    grid-column: auto;
   }
 
   .project-card__topline {
@@ -1449,6 +1550,17 @@ main,
 
   .project-card {
     display: block;
+  }
+
+  .project-card--bot .project-card__art {
+    height: 210px;
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .robot-bear {
+    width: min(220px, 82%);
   }
 
   .project-card__art {

@@ -27,7 +27,7 @@ const translations = {
     nodeStatus: 'NODO ACTIVO · BLOQUE',
     projectsEyebrow: 'SELECCIÓN DE MISIONES',
     projectsTitle: 'Proyectos principales',
-    projectsIntro: 'Cuatro artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.',
+    projectsIntro: 'Cinco artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.',
     monitorDescription: 'Monitor macroeconómico de Argentina que reúne datos oficiales del BCRA, INDEC y MECON en tablas y gráficos comparables.',
     monitorTechnologies: 'Tecnologías de Monitorcillo',
     footballDescription: 'Juego de fútbol 2D por turnos con física estilo pool, entrenamiento local, desafíos vía Nostr y partidas multijugador.',
@@ -36,6 +36,8 @@ const translations = {
     satsTechnologies: 'Tecnologías de Satoshillo',
     clipDescription: 'Editor de clips con transcripción automática de subtítulos, detección de silencios y herramientas inteligentes para acelerar la edición.',
     clipTechnologies: 'Tecnologías de Clipcillo',
+    botDescription: 'Bot de Bitcoin para Discord y Telegram que sigue el precio, organiza rondas de predicción, mantiene rankings y procesa pagos Lightning mediante NWC.',
+    botTechnologies: 'Tecnologías de Botillo',
     viewProject: 'Ver proyecto',
     viewCode: 'Ver código',
     playNow: 'Jugar ahora',
@@ -94,7 +96,7 @@ const translations = {
     nodeStatus: 'ACTIVE NODE · BLOCK',
     projectsEyebrow: 'MISSION SELECTION',
     projectsTitle: 'Featured projects',
-    projectsIntro: 'Four artifacts built in Fierillolandia. Choose one to begin exploring.',
+    projectsIntro: 'Five artifacts built in Fierillolandia. Choose one to begin exploring.',
     monitorDescription: 'An Argentine macroeconomic monitor that brings official BCRA, INDEC, and MECON data into comparable tables and charts.',
     monitorTechnologies: 'Monitorcillo technologies',
     footballDescription: 'A turn-based 2D football game with pool-style physics, local training, Nostr challenges, and multiplayer matches.',
@@ -103,6 +105,8 @@ const translations = {
     satsTechnologies: 'Satoshillo technologies',
     clipDescription: 'A clip editor with automatic subtitle transcription, silence detection, and intelligent tools that speed up the editing workflow.',
     clipTechnologies: 'Clipcillo technologies',
+    botDescription: 'A Bitcoin bot for Discord and Telegram that tracks prices, runs prediction rounds, maintains leaderboards, and processes Lightning payments through NWC.',
+    botTechnologies: 'Botillo technologies',
     viewProject: 'View project',
     viewCode: 'View code',
     playNow: 'Play now',
@@ -212,6 +216,12 @@ function playProjectSound(project) {
       [390, 0.04, 'square', 0.018, 0.05],
       [520, 0.04, 'square', 0.018, 0.1],
       [780, 0.08, 'triangle', 0.018, 0.15],
+    ],
+    bot: [
+      [240, 0.04, 'square', 0.018, 0],
+      [480, 0.04, 'square', 0.02, 0.05],
+      [960, 0.05, 'square', 0.018, 0.1],
+      [720, 0.09, 'triangle', 0.018, 0.16],
     ],
   };
 
@@ -356,7 +366,7 @@ async function loadMoreProjects() {
     const response = await fetch('https://api.github.com/users/Fierillo/repos?per_page=100&sort=updated');
     if (!response.ok) throw new Error(`GitHub respondió ${response.status}`);
 
-    const featured = new Set(['monitorcillo', 'futbolcillo', 'satoshillo', 'clipcillo', 'fierillo']);
+    const featured = new Set(['monitorcillo', 'futbolcillo', 'satoshillo', 'clipcillo', 'botillo', 'fierillo']);
     loadedRepos = (await response.json()).filter(
       (repo) => !repo.fork && !featured.has(repo.name.toLowerCase()),
     );

@@ -1,7 +1,11 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 
-export default defineConfig({
-  server: {
-    allowedHosts: ['debiancillo.tail49b6a3.ts.net'],
-  },
+export default defineConfig(({ mode }) => {
+  const { VITE_ALLOWED_HOST } = loadEnv(mode, process.cwd(), '');
+
+  return {
+    server: {
+      allowedHosts: VITE_ALLOWED_HOST ? [VITE_ALLOWED_HOST] : [],
+    },
+  };
 });

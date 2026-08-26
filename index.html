@@ -7,295 +7,200 @@
       name="description"
       content="Fierillolandia: proyectos, código y Bitcoin desde el rincón digital de un desarrollador autodidacta."
     />
-    <meta name="theme-color" content="#120e0a" />
+    <meta name="theme-color" content="#070402" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Fierillolandia | Código, Bitcoin y libertad</title>
   </head>
   <body>
     <a class="skip-link" href="#contenido" data-i18n="skipLink">Saltar al contenido</a>
+    <div class="matrix-grid" aria-hidden="true"></div>
 
-    <div class="boot-screen" id="boot-screen" role="dialog" aria-modal="true" aria-labelledby="boot-title">
-      <div class="boot-screen__noise" aria-hidden="true"></div>
-      <div class="boot-terminal">
-        <p class="boot-terminal__label">FIERILLO OS v1.0</p>
-        <h1 id="boot-title">FIERILLOLANDIA</h1>
-        <p class="boot-terminal__status" id="boot-status"><span data-i18n="bootReady">Sistema listo</span><span aria-hidden="true">_</span></p>
-        <div class="boot-terminal__actions">
-          <button class="pixel-button" type="button" data-enter="sound" data-i18n="enterSound">Entrar con sonido</button>
-          <button class="text-button" type="button" data-enter="silent" data-i18n="enterSilent">Entrar en silencio</button>
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="Fierillolandia, inicio" data-i18n-aria-label="brandHome">
+        <span aria-hidden="true"></span>FIERILLO
+      </a>
+      <nav class="main-nav" aria-label="Navegación principal" data-i18n-aria-label="mainNavigation">
+        <a href="#proyectos" data-i18n="navProjects">Proyectos</a>
+        <a href="#sobre-mi" data-i18n="navAbout">Sobre mí</a>
+        <a href="#contacto" data-i18n="navContact">Contacto</a>
+      </nav>
+      <div class="language-switch" role="group" aria-label="Idioma" data-i18n-aria-label="languageSelector">
+        <button type="button" data-language="es" aria-pressed="true" aria-label="Español" data-i18n-aria-label="spanishLanguage">ES</button>
+        <button type="button" data-language="en" aria-pressed="false" aria-label="Inglés" data-i18n-aria-label="englishLanguage">EN</button>
+      </div>
+    </header>
+
+    <main id="contenido">
+      <section class="hero" id="inicio" aria-labelledby="hero-title">
+        <div class="hacker-bear reveal" aria-hidden="true">
+          <svg viewBox="0 0 260 210" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="bear-fur" cx="0" cy="0" r="1" gradientTransform="translate(116 76) rotate(54) scale(81 77)" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#70401f" /><stop offset="1" stop-color="#2b170c" />
+              </radialGradient>
+              <linearGradient id="laptop-lid" x1="65" y1="132" x2="195" y2="196" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#4a3324" /><stop offset="0.45" stop-color="#302016" /><stop offset="1" stop-color="#160c07" />
+              </linearGradient>
+            </defs>
+            <ellipse class="hacker-bear__shadow" cx="130" cy="202" rx="80" ry="6" />
+            <g class="hacker-bear__figure">
+              <path class="hacker-bear__body" d="M67 158C72 128 95 113 130 113C165 113 188 128 193 158Z" />
+              <circle class="hacker-bear__ear" cx="88" cy="67" r="17" />
+              <circle class="hacker-bear__ear" cx="172" cy="67" r="17" />
+              <circle class="hacker-bear__inner-ear" cx="88" cy="67" r="8" /><circle class="hacker-bear__inner-ear" cx="172" cy="67" r="8" />
+              <path class="hacker-bear__face" fill="url(#bear-fur)" d="M79 97C79 64 100 46 130 46C160 46 181 64 181 97C181 126 161 143 130 143C99 143 79 126 79 97Z" />
+              <path class="hacker-bear__brows" d="M98 82L115 78M145 78L162 82" />
+              <g class="hacker-bear__eyes"><circle cx="108" cy="91" r="4" /><circle cx="152" cy="91" r="4" /></g>
+              <path class="hacker-bear__muzzle" d="M109 108C109 98 118 94 130 94C142 94 151 98 151 108C151 121 142 128 130 128C118 128 109 121 109 108Z" />
+              <path class="hacker-bear__nose" d="M123 103H137L133 112H127Z" />
+              <path class="hacker-bear__mouth" d="M130 112V119M119 119C125 125 135 125 141 119" />
+            </g>
+            <g class="hacker-bear__paws">
+              <path d="M58 158C58 145 66 138 77 138C88 138 95 146 93 158Z" />
+              <path d="M167 158C165 146 172 138 183 138C194 138 202 145 202 158Z" />
+              <path class="hacker-bear__claws" d="M69 148V154M79 147V154M181 147V154M191 148V154" />
+            </g>
+            <g class="hacker-bear__laptop">
+              <path class="hacker-bear__case" fill="url(#laptop-lid)" d="M67 132H193C198 132 201 136 200 141L196 196H64L60 141C59 136 62 132 67 132Z" />
+              <path class="hacker-bear__lid-sheen" d="M65 137H116L89 192H64Z" />
+              <g class="hacker-bear__screws"><circle cx="70" cy="142" r="2" /><circle cx="190" cy="142" r="2" /><circle cx="73" cy="187" r="2" /><circle cx="187" cy="187" r="2" /></g>
+              <path class="hacker-bear__hinge" d="M64 196H196" />
+              <rect class="hacker-bear__base" x="64" y="196" width="132" height="12" />
+            </g>
+          </svg>
         </div>
-      </div>
-    </div>
+        <p class="eyebrow reveal" data-i18n="heroEyebrow">DESARROLLADOR AUTODIDACTA</p>
+        <h1 class="reveal" id="hero-title" data-i18n-html="heroTitle">Código.<br />Bitcoin.<br /><span>Libertad.</span></h1>
+        <div class="hero__footer reveal">
+          <p data-i18n="heroIntro">Construyo herramientas por curiosidad, utilidad y soberanía.</p>
+        </div>
+      </section>
 
-    <div class="site-shell" id="site-shell" inert>
-      <div class="sky" aria-hidden="true">
-        <span class="star star--one"></span>
-        <span class="star star--two"></span>
-        <span class="star star--three"></span>
-        <span class="star star--four"></span>
-        <span class="star star--five"></span>
-      </div>
-      <div class="scanlines" aria-hidden="true"></div>
+      <section class="section projects" id="proyectos" aria-labelledby="projects-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-i18n="projectsEyebrow">TRABAJO SELECCIONADO</p>
+          <h2 id="projects-title" data-i18n="projectsTitle">Proyectos</h2>
+          <p data-i18n="projectsIntro">Software abierto enfocado en datos, Bitcoin y herramientas útiles.</p>
+        </div>
 
-      <header class="site-header">
-        <a class="brand" href="#inicio" aria-label="Fierillolandia, inicio" data-i18n-aria-label="brandHome">
-          <span class="brand__coin" aria-hidden="true">₿</span>
-          <span>FIERILLOLANDIA</span>
-        </a>
-        <nav class="main-nav" aria-label="Navegación principal" data-i18n-aria-label="mainNavigation">
-          <a href="#proyectos" data-i18n="navProjects">Proyectos</a>
-          <a href="#sobre-mi" data-i18n="navAbout">Sobre mí</a>
-          <a href="#contacto" data-i18n="navContact">Contacto</a>
-        </nav>
-        <div class="header-controls">
-          <div class="language-switch" role="group" aria-label="Idioma" data-i18n-aria-label="languageSelector">
-            <button class="language-switch__option" type="button" data-language="es" aria-pressed="true" aria-label="Español" data-i18n-aria-label="spanishLanguage">🇦🇷</button>
-            <button class="language-switch__option" type="button" data-language="en" aria-pressed="false" aria-label="Inglés" data-i18n-aria-label="englishLanguage">🇺🇸</button>
-          </div>
-          <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false">
-            <span class="sound-toggle__icon" aria-hidden="true">♪</span>
-            <span class="sound-toggle__text">Sonido: off</span>
+        <div class="project-list">
+          <article class="project reveal">
+            <span class="project__index">01</span>
+            <div class="project__identity">
+              <h3>Monitorcillo</h3>
+              <ul aria-label="Tecnologías de Monitorcillo" data-i18n-aria-label="monitorTechnologies"><li>Next.js</li><li>TypeScript</li><li>Neon</li></ul>
+            </div>
+            <div class="project__detail">
+              <p data-i18n="monitorDescription">Monitor macroeconómico de Argentina con datos oficiales comparables.</p>
+              <div class="project__links">
+                <a href="https://monitorcillo.vercel.app" target="_blank" rel="noreferrer"><span data-i18n="viewProject">Ver proyecto</span> ↗</a>
+                <a href="https://github.com/Fierillo/monitorcillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
+                <span class="project__block"><span data-i18n="foundedBlock">Fundado en bloque</span> 937736</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal">
+            <span class="project__index">02</span>
+            <div class="project__identity">
+              <h3>Futbolcillo</h3>
+              <ul aria-label="Tecnologías de Futbolcillo" data-i18n-aria-label="footballTechnologies"><li>React</li><li>Canvas</li><li>Nostr</li></ul>
+            </div>
+            <div class="project__detail">
+              <p data-i18n="footballDescription">Juego de fútbol 2D por turnos con física, desafíos Nostr y multijugador.</p>
+              <div class="project__links">
+                <a href="https://futbolcillo.vercel.app" target="_blank" rel="noreferrer"><span data-i18n="playNow">Jugar</span> ↗</a>
+                <a href="https://github.com/Fierillo/Futbolcillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
+                <span class="project__block"><span data-i18n="foundedBlock">Fundado en bloque</span> 953158</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal">
+            <span class="project__index">03</span>
+            <div class="project__identity">
+              <h3>Satoshillo</h3>
+              <ul aria-label="Tecnologías de Satoshillo" data-i18n-aria-label="satsTechnologies"><li>JavaScript</li><li>Manifest V3</li><li>Bitcoin</li></ul>
+            </div>
+            <div class="project__detail">
+              <p data-i18n="satsDescription">Extensión que convierte precios en monedas fiat a satoshis en cualquier web.</p>
+              <div class="project__links">
+                <a href="https://github.com/Fierillo/satoshillo/releases/latest" target="_blank" rel="noreferrer"><span data-i18n="download">Descargar</span> ↗</a>
+                <a href="https://github.com/Fierillo/satoshillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
+                <span class="project__block"><span data-i18n="foundedBlock">Fundado en bloque</span> 961365</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal">
+            <span class="project__index">04</span>
+            <div class="project__identity">
+              <h3>Clipcillo</h3>
+              <ul aria-label="Tecnologías de Clipcillo" data-i18n-aria-label="clipTechnologies"><li>Python</li><li>FastAPI</li><li>Whisper</li></ul>
+            </div>
+            <div class="project__detail">
+              <p data-i18n="clipDescription">Editor de clips con transcripción, subtítulos y detección de silencios.</p>
+              <div class="project__links"><a href="https://github.com/Fierillo/clipcillo" target="_blank" rel="noreferrer"><span data-i18n="viewCode">Ver código</span> ↗</a><span class="project__block"><span data-i18n="foundedBlock">Fundado en bloque</span> 961051</span></div>
+            </div>
+          </article>
+
+          <article class="project reveal">
+            <span class="project__index">05</span>
+            <div class="project__identity">
+              <h3>Botillo</h3>
+              <ul aria-label="Tecnologías de Botillo" data-i18n-aria-label="botTechnologies"><li>TypeScript</li><li>Telegram</li><li>Lightning</li></ul>
+            </div>
+            <div class="project__detail">
+              <p data-i18n="botDescription">Bot de Bitcoin para Discord y Telegram con predicciones y pagos Lightning.</p>
+              <div class="project__links"><a href="https://github.com/Fierillo/botillo" target="_blank" rel="noreferrer"><span data-i18n="viewCode">Ver código</span> ↗</a><span class="project__block"><span data-i18n="foundedBlock">Fundado en bloque</span> 862896</span></div>
+            </div>
+          </article>
+        </div>
+
+        <div class="more-projects reveal">
+          <button id="more-projects-toggle" type="button" aria-expanded="false" aria-controls="other-projects">
+            <span id="more-projects-label">Más proyectos</span><span aria-hidden="true">＋</span>
           </button>
+          <div id="other-projects" hidden>
+            <p class="more-projects__status" id="projects-status" role="status" aria-live="polite">Conectando con GitHub...</p>
+            <div class="repo-list" id="repo-list"></div>
+          </div>
         </div>
-      </header>
+      </section>
 
-      <main id="contenido">
-        <section class="hero" id="inicio" aria-labelledby="hero-title">
-          <div class="hero__copy reveal">
-            <p class="eyebrow"><span aria-hidden="true">&gt;</span> <span data-i18n="heroEyebrow">BIENVENIDO, VIAJERO</span></p>
-            <h2 id="hero-title" data-i18n-html="heroTitle">Código, Bitcoin<br />y <span>libertad.</span></h2>
-            <p class="hero__intro" data-i18n="heroIntro">
-              Soy Fierillo: Un desarrollador autodidacta. Construyo herramientas por curiosidad, utilidad y soberanía.
-            </p>
-            <div class="hero__actions">
-              <a class="pixel-button sound-link" href="#proyectos" data-i18n="exploreProjects">Explorar proyectos</a>
-              <a class="text-link sound-link" href="#sobre-mi"><span data-i18n="meetCreator">Conocer al creador</span> <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
+      <section class="section about" id="sobre-mi" aria-labelledby="about-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-i18n="aboutEyebrow">SOBRE MÍ</p>
+          <h2 id="about-title" data-i18n="aboutTitle">Construir para entender.</h2>
+          <a class="about__portrait" href="https://github.com/Fierillo" target="_blank" rel="noreferrer" aria-label="GitHub">
+            <img src="https://avatars.githubusercontent.com/u/31271916?v=4" alt="Avatar de Fierillo" width="160" height="160" data-i18n-alt="avatarAlt" />
+          </a>
+        </div>
+        <div class="about__copy reveal">
+          <p data-i18n="aboutFirst">Con un background como estudiante de ingeniería, tengo el pragmatismo y la construcción en la sangre.</p>
+          <p data-i18n="aboutSecond">Bitcoin me señaló el lugar donde quiero edificar; luego me hice dev de forma autodidacta y gracias a la IA pude alcanzar nuevas cotas de creatividad.</p>
+          <p data-i18n="aboutThird">Fierillolandia es el lugar donde comparto todo lo que voy creando.</p>
+          <p class="values" data-i18n="values">Honestidad · Minimalismo · Humildad · Curiosidad</p>
+        </div>
+      </section>
 
-          <div class="hero__scene reveal" aria-label="Oso desarrollador construyendo software en pixel art" data-i18n-aria-label="heroSceneLabel">
-            <div class="moon"><span>₿</span></div>
-            <div class="cloud cloud--one"></div>
-            <div class="cloud cloud--two"></div>
-            <div class="builder-scene" aria-hidden="true">
-              <div class="pixel-bear">
-                <span class="pixel-bear__ear pixel-bear__ear--left"></span>
-                <span class="pixel-bear__ear pixel-bear__ear--right"></span>
-                <span class="pixel-bear__head"><i></i><i></i><b></b></span>
-                <span class="pixel-bear__body"></span>
-                <span class="pixel-bear__paw"></span>
-              </div>
-              <div class="workstation">
-                <div class="code-blocks"><i></i><i></i><i></i></div>
-                <div class="pixel-screen"><span></span><span></span><span></span><b>_</b></div>
-                <div class="pixel-keyboard"></div>
-                <div class="workbench"><i></i><i></i></div>
-              </div>
-            </div>
-            <div class="hero__scene-label"><span class="status-dot"></span> <span data-i18n="nodeStatus">NODO ACTIVO · BLOQUE</span> <span id="block-number">000000</span></div>
-          </div>
-        </section>
+      <section class="section contact" id="contacto" aria-labelledby="contact-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-i18n="contactEyebrow">CONTACTO</p>
+          <h2 id="contact-title" data-i18n="contactTitle">Hablemos.</h2>
+        </div>
+        <div class="contact__links reveal">
+          <a href="https://github.com/Fierillo" target="_blank" rel="noreferrer">GitHub ↗</a>
+          <a href="https://twitter.com/fierillo" target="_blank" rel="noreferrer">Twitter ↗</a>
+          <a href="https://t.me/FieriLLo" target="_blank" rel="noreferrer">Telegram ↗</a>
+        </div>
+      </section>
+    </main>
 
-        <section class="projects section" id="proyectos" aria-labelledby="projects-title">
-          <div class="section-heading reveal">
-            <p class="eyebrow" data-i18n="projectsEyebrow">SELECCIÓN DE MISIONES</p>
-            <h2 id="projects-title" data-i18n="projectsTitle">Proyectos principales</h2>
-            <p data-i18n="projectsIntro">Cinco artefactos construidos en Fierillolandia. Elegí uno para comenzar la exploración.</p>
-          </div>
-
-          <div class="project-grid">
-            <article class="project-card project-card--monitor reveal" data-project-sound="monitor">
-              <div class="project-card__topline"><span>01</span></div>
-              <div class="project-card__art" aria-hidden="true">
-                <div class="pixel-monitor"><div><span></span><span></span><span></span></div></div>
-              </div>
-              <div class="project-card__body">
-                <h3>Monitorcillo</h3>
-                <p data-i18n="monitorDescription">Monitor macroeconómico de Argentina que reúne datos oficiales del BCRA, INDEC y MECON en tablas y gráficos comparables.</p>
-                <ul class="project-card__stack" aria-label="Tecnologías de Monitorcillo" data-i18n-aria-label="monitorTechnologies">
-                  <li>Next.js</li><li>TypeScript</li><li>Neon</li>
-                </ul>
-                <div class="project-card__links">
-                  <a class="project-card__cta sound-link" href="https://monitorcillo.vercel.app" target="_blank" rel="noreferrer"><span data-i18n="viewProject">Ver proyecto</span> <span aria-hidden="true">↗</span></a>
-                  <a class="project-card__code sound-link" href="https://github.com/Fierillo/monitorcillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card project-card--football reveal" data-project-sound="football">
-              <div class="project-card__topline"><span>02</span></div>
-              <div class="project-card__art" aria-hidden="true">
-                <div class="pixel-ball"><span></span></div>
-                <div class="field-line"></div>
-              </div>
-              <div class="project-card__body">
-                <h3>Futbolcillo</h3>
-                <p data-i18n="footballDescription">Juego de fútbol 2D por turnos con física estilo pool, entrenamiento local, desafíos vía Nostr y partidas multijugador.</p>
-                <ul class="project-card__stack" aria-label="Tecnologías de Futbolcillo" data-i18n-aria-label="footballTechnologies">
-                  <li>React</li><li>Canvas</li><li>Nostr</li>
-                </ul>
-                <div class="project-card__links">
-                  <a class="project-card__cta sound-link" href="https://futbolcillo.vercel.app" target="_blank" rel="noreferrer"><span data-i18n="playNow">Jugar ahora</span> <span aria-hidden="true">↗</span></a>
-                  <a class="project-card__code sound-link" href="https://github.com/Fierillo/Futbolcillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card project-card--sats reveal" data-project-sound="sats">
-              <div class="project-card__topline"><span>03</span></div>
-              <div class="project-card__art" aria-hidden="true">
-                <div class="bitcoin-price">
-                  <div class="bitcoin-tile">₿</div>
-                  <span>$ 21.000</span>
-                </div>
-              </div>
-              <div class="project-card__body">
-                <h3>Satoshillo</h3>
-                <p data-i18n="satsDescription">Extensión que detecta precios en ARS, USD, EUR y JPY en cualquier web y muestra su valor en satoshis en tiempo real.</p>
-                <ul class="project-card__stack" aria-label="Tecnologías de Satoshillo" data-i18n-aria-label="satsTechnologies">
-                  <li>JavaScript</li><li>Manifest V3</li><li>Bitcoin</li>
-                </ul>
-                <div class="project-card__links">
-                  <a class="project-card__cta sound-link" href="https://github.com/Fierillo/satoshillo/releases/latest" target="_blank" rel="noreferrer"><span data-i18n="download">Descargar</span> <span aria-hidden="true">↗</span></a>
-                  <a class="project-card__code sound-link" href="https://github.com/Fierillo/satoshillo" target="_blank" rel="noreferrer" data-i18n="code">Código</a>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card project-card--clip reveal" data-project-sound="clip">
-              <div class="project-card__topline"><span>04</span></div>
-              <div class="project-card__art" aria-hidden="true">
-                <div class="pixel-editor">
-                  <div class="pixel-editor__preview"><i></i><span>CC</span></div>
-                  <div class="pixel-editor__timeline"><i></i><i></i><i></i></div>
-                </div>
-              </div>
-              <div class="project-card__body">
-                <h3>Clipcillo</h3>
-                <p data-i18n="clipDescription">Editor de clips con transcripción automática de subtítulos, detección de silencios y herramientas inteligentes para acelerar la edición.</p>
-                <ul class="project-card__stack" aria-label="Tecnologías de Clipcillo" data-i18n-aria-label="clipTechnologies">
-                  <li>Python</li><li>FastAPI</li><li>Whisper</li>
-                </ul>
-                <div class="project-card__links project-card__links--single">
-                  <a class="project-card__cta sound-link" href="https://github.com/Fierillo/clipcillo" target="_blank" rel="noreferrer"><span data-i18n="viewCode">Ver código</span> <span aria-hidden="true">↗</span></a>
-                </div>
-              </div>
-            </article>
-
-            <article class="project-card project-card--bot reveal" data-project-sound="bot">
-              <div class="project-card__topline"><span>05</span></div>
-              <div class="project-card__art" aria-hidden="true">
-                <svg class="robot-bear" viewBox="0 0 260 230" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <linearGradient id="bot-metal" x1="35" y1="35" x2="220" y2="195" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#c9c2b7" />
-                      <stop offset="0.48" stop-color="#91887e" />
-                      <stop offset="0.5" stop-color="#71685f" />
-                      <stop offset="1" stop-color="#514941" />
-                    </linearGradient>
-                    <filter id="bot-laser-glow" x="-80%" y="-200%" width="260%" height="500%">
-                      <feGaussianBlur stdDeviation="5" result="glow" />
-                      <feMerge><feMergeNode in="glow" /><feMergeNode in="SourceGraphic" /></feMerge>
-                    </filter>
-                  </defs>
-                  <ellipse class="robot-bear__shadow" cx="130" cy="216" rx="67" ry="9" />
-                  <g class="robot-bear__head">
-                    <path d="M130 42V16" stroke="#0b0805" stroke-width="10" />
-                    <circle class="robot-bear__antenna-light" cx="130" cy="12" r="8" />
-                    <path class="robot-bear__shell" fill="url(#bot-metal)" d="M84 49C86 29 76 12 58 10C37 8 20 24 20 45C20 59 27 69 40 75V157C40 180 58 195 80 195H180C202 195 220 180 220 157V75C233 69 240 59 240 45C240 24 223 8 202 10C184 12 174 29 176 49C164 43 150 40 130 40C110 40 96 43 84 49Z" />
-                    <circle class="robot-bear__inner-ear" cx="58" cy="43" r="17" />
-                    <circle class="robot-bear__inner-ear" cx="202" cy="43" r="17" />
-                    <path class="robot-bear__panel" d="M130 52V119M53 73L76 64M207 73L184 64" />
-                    <g class="robot-bear__laser-eyes" filter="url(#bot-laser-glow)">
-                      <rect x="67" y="91" width="47" height="14" rx="7" />
-                      <rect x="146" y="91" width="47" height="14" rx="7" />
-                    </g>
-                    <circle class="robot-bear__bolt" cx="57" cy="126" r="6" />
-                    <circle class="robot-bear__bolt" cx="203" cy="126" r="6" />
-                    <rect class="robot-bear__muzzle" x="91" y="124" width="78" height="51" rx="19" />
-                    <path class="robot-bear__nose" d="M116 139H144L138 153H122Z" />
-                    <path class="robot-bear__mouth" d="M130 153V164M117 164H143" />
-                  </g>
-                </svg>
-              </div>
-              <div class="project-card__body">
-                <h3>Botillo</h3>
-                <p data-i18n="botDescription">Bot de Bitcoin para Discord y Telegram que sigue el precio, organiza rondas de predicción, mantiene rankings y procesa pagos Lightning mediante NWC.</p>
-                <ul class="project-card__stack" aria-label="Tecnologías de Botillo" data-i18n-aria-label="botTechnologies">
-                  <li>TypeScript</li><li>Discord</li><li>Telegram</li><li>Lightning</li>
-                </ul>
-                <div class="project-card__links project-card__links--single">
-                  <a class="project-card__cta sound-link" href="https://github.com/Fierillo/botillo" target="_blank" rel="noreferrer"><span data-i18n="viewCode">Ver código</span> <span aria-hidden="true">↗</span></a>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <div class="more-projects reveal">
-            <button
-              class="pixel-button more-projects__toggle"
-              id="more-projects-toggle"
-              type="button"
-              aria-expanded="false"
-              aria-controls="other-projects"
-            >
-              <span id="more-projects-label">+ Más proyectos</span>
-            </button>
-            <div class="more-projects__panel" id="other-projects" hidden>
-              <p class="more-projects__status" id="projects-status" role="status" aria-live="polite" data-state="loading">Conectando con GitHub...</p>
-              <div class="repo-list" id="repo-list"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="about section" id="sobre-mi" aria-labelledby="about-title">
-          <div class="about__portrait reveal">
-            <div class="portrait-frame">
-              <img src="https://avatars.githubusercontent.com/u/31271916?v=4" alt="Avatar de Fierillo: un oso en pixel art" width="460" height="460" data-i18n-alt="avatarAlt" />
-            </div>
-            <p>PLAYER_01 // FIERILLO</p>
-          </div>
-          <div class="about__copy reveal">
-            <p class="eyebrow" data-i18n="aboutEyebrow">ARCHIVO DEL CREADOR</p>
-            <h2 id="about-title" data-i18n-html="aboutTitle">Aprender, construir,<br /><span>compartir.</span></h2>
-            <p data-i18n="aboutFirst">
-              Con un background como estudiante de ingeniería, tengo el pragmatismo y la construcción en la sangre.
-            </p>
-            <p data-i18n="aboutSecond">
-              Bitcoin me señaló el lugar donde quiero edificar; luego me hice dev de forma autodidacta y gracias a la IA
-              pude alcanzar nuevas cotas de creatividad.
-            </p>
-            <p data-i18n="aboutThird">Fierillolandia es el lugar donde comparto todo lo que voy creando.</p>
-            <p class="about__values-title" data-i18n="valuesTitle">Mis valores son:</p>
-            <ul class="principles" aria-label="Mis valores" data-i18n-aria-label="valuesLabel">
-              <li><span>01</span><b data-i18n="honesty">Honestidad</b></li>
-              <li><span>02</span><b data-i18n="minimalism">Minimalismo</b></li>
-              <li><span>03</span><b data-i18n="humility">Humildad</b></li>
-              <li><span>04</span><b data-i18n="curiosity">Curiosidad</b></li>
-            </ul>
-          </div>
-        </section>
-
-        <section class="contact section reveal" id="contacto" aria-labelledby="contact-title">
-          <div>
-            <p class="eyebrow" data-i18n="contactEyebrow">CANAL DE COMUNICACIÓN</p>
-            <h2 id="contact-title" data-i18n="contactTitle">¿Construimos algo?</h2>
-            <p data-i18n="contactDescription">Encontrá mis proyectos abiertos o escribime por cualquiera de estos canales.</p>
-            <div class="contact__links">
-              <a class="pixel-button sound-link" href="https://github.com/Fierillo" target="_blank" rel="noreferrer">GitHub</a>
-              <a class="contact__link sound-link" href="https://twitter.com/fierillo" target="_blank" rel="noreferrer">Twitter / @fierillo <span aria-hidden="true">↗</span></a>
-              <a class="contact__link sound-link" href="https://t.me/FieriLLo" target="_blank" rel="noreferrer">Telegram / @FieriLLo <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-          <span class="contact__signal" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        </section>
-      </main>
-
-      <footer class="site-footer">
-        <p><span data-i18n="footerMade">Hecho con amor por Fierillo</span> <span class="pixel-heart" aria-hidden="true"></span></p>
-        <p><span class="status-dot"></span> <span data-i18n="systemOnline">SISTEMA ONLINE</span> · <span id="current-year"></span></p>
-      </footer>
-    </div>
+    <footer class="site-footer">
+      <span data-i18n="footerMade">Hecho con amor por Fierillo</span>
+      <span><span class="status-dot" aria-hidden="true"></span><span data-i18n="systemOnline">ONLINE</span> · <span data-i18n="blockLabel">BLOQUE</span> <span id="block-number">------</span></span>
+    </footer>
 
     <script type="module" src="/src/main.js"></script>
   </body>

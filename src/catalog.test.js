@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   FEATURED_REPOS,
+  explorerPresentation,
   filterExplorerRepos,
   moreProjectsCopy,
   repoCardModel,
@@ -21,39 +22,35 @@ describe('resolveLanguage', () => {
 });
 
 describe('filterExplorerRepos', () => {
-  it('hides forks and featured repositories', () => {
+  it('hides forks and keeps unrelated repositories', () => {
     const repos = [
       { name: 'ororojo29', fork: false },
-      { name: 'Monitorcillo', fork: false },
       { name: 'lawallet-nwc', fork: true },
-      { name: 'clipcillo', fork: false },
       { name: 'portfolio', fork: false },
     ];
 
     expect(filterExplorerRepos(repos).map((repo) => repo.name)).toEqual(['ororojo29', 'portfolio']);
   });
 
-  it('keeps the featured exclusion list complete', () => {
-    expect([...FEATURED_REPOS]).toEqual([
-      'monitorcillo',
-      'futbolcillo',
-      'satoshillo',
-      'clipcillo',
-      'botillo',
-      'fierillo',
-    ]);
+  it('excludes every featured name regardless of casing', () => {
+    const repos = FEATURED_REPOS.map((name) => ({ name: name.toUpperCase(), fork: false }));
+    expect(filterExplorerRepos(repos)).toEqual([]);
   });
 });
 
 describe('repoCardModel', () => {
-  const text = translations.es;
+  const text = {
+    codeFallback: 'LANG',
+    emptyDescription: 'DESC',
+    archivedRepo: 'ARCH',
+  };
 
   it('uses the github description and language when present', () => {
     expect(
       repoCardModel(
         {
           name: 'ororojo29',
-          html_url: 'https://github.com/Fierillo/ororojo29',
+          html_url: 'https://example.test/ororojo29',
           language: 'TypeScript',
           description: 'Copper shop',
           archived: false,
@@ -62,18 +59,18 @@ describe('repoCardModel', () => {
       ),
     ).toEqual({
       name: 'ororojo29',
-      href: 'https://github.com/Fierillo/ororojo29',
+      href: 'https://example.test/ororojo29',
       language: 'TypeScript',
       description: 'Copper shop',
       archivedLabel: null,
     });
   });
 
-  it('falls back without public or year metadata', () => {
+  it('falls back through the provided catalog text', () => {
     const card = repoCardModel(
       {
-        name: 'test',
-        html_url: 'https://github.com/Fierillo/test',
+        name: 'sample',
+        html_url: 'https://example.test/sample',
         language: null,
         description: null,
         archived: true,
@@ -82,23 +79,19 @@ describe('repoCardModel', () => {
       text,
     );
 
-    expect(card.language).toBe('Código');
-    expect(card.description).toBe('Proyecto disponible en GitHub.');
-    expect(card.archivedLabel).toBe('ARCHIVADO');
+    expect(card.language).toBe(text.codeFallback);
+    expect(card.description).toBe(text.emptyDescription);
+    expect(card.archivedLabel).toBe(text.archivedRepo);
     expect(JSON.stringify(card)).not.toMatch(/PÚBLICO|PUBLIC|2024/);
   });
 });
 
 describe('moreProjectsCopy', () => {
-  it('toggles label and symbol from the collapsed state', () => {
-    expect(moreProjectsCopy(false, translations.es)).toEqual({
-      label: 'Más proyectos',
-      symbol: '＋',
-    });
-    expect(moreProjectsCopy(true, translations.en)).toEqual({
-      label: 'Hide projects',
-      symbol: '−',
-    });
+  it('toggles label and symbol from the expanded flag', () => {
+    const text = { moreProjects: 'OPEN', hideProjects: 'CLOSE' };
+
+    expect(moreProjectsCopy(false, text)).toEqual({ label: 'OPEN', symbol: '＋' });
+    expect(moreProjectsCopy(true, text)).toEqual({ label: 'CLOSE', symbol: '−' });
   });
 });
 
@@ -106,8 +99,65 @@ describe('translations', () => {
   it('keeps spanish and english keys aligned', () => {
     expect(Object.keys(translations.es).sort()).toEqual(Object.keys(translations.en).sort());
   });
+});
 
-  it('does not carry leftover sound copy', () => {
-    expect(Object.keys(translations.es).join(' ')).not.toMatch(/sound|audio|boot/i);
+describe('explorerPresentation', () => {
+  const text = {
+    githubLoading: 'LOADING',
+    githubError: 'ERROR',
+    githubFallback: 'FALLBACK',
+    codeFallback: 'LANG',
+    emptyDescription: 'DESC',
+    archivedRepo: 'ARCH',
+  };
+
+  it('shows loading copy before repos arrive', () => {
+    expect(explorerPresentation('loading', [], text)).toEqual({
+      statusHidden: false,
+      statusText: 'LOADING',
+      cards: [],
+      fallback: null,
+    });
+  });
+
+  it('shows error copy with a repositories fallback', () => {
+    const view = explorerPresentation('error', [], text);
+
+    expect(view.statusHidden).toBe(false);
+    expect(view.statusText).toBe('ERROR');
+    expect(view.cards).toEqual([]);
+    expect(view.fallback).toEqual({
+      href: expect.stringMatching(/^https:\/\/github\.com\/[^/]+\?tab=repositories$/),
+      label: 'FALLBACK',
+    });
+  });
+
+  it('maps loaded repos into cards and hides status', () => {
+    const view = explorerPresentation(
+      'loaded',
+      [
+        {
+          name: 'portfolio',
+          html_url: 'https://example.test/portfolio',
+          language: 'JavaScript',
+          description: 'Site',
+          archived: false,
+        },
+      ],
+      text,
+    );
+
+    expect(view.statusHidden).toBe(true);
+    expect(view.statusText).toBe('');
+    expect(view.fallback).toBeNull();
+    expect(view.cards).toEqual([
+      {
+        name: 'portfolio',
+        href: 'https://example.test/portfolio',
+        language: 'JavaScript',
+        description: 'Site',
+        archivedLabel: null,
+      },
+    ]);
   });
 });

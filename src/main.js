@@ -1,5 +1,11 @@
 import { inject } from '@vercel/analytics';
-import { filterExplorerRepos, moreProjectsCopy, repoCardModel, resolveLanguage, translations } from './catalog.js';
+import {
+  explorerPresentation,
+  filterExplorerRepos,
+  moreProjectsCopy,
+  resolveLanguage,
+  translations,
+} from './catalog.js';
 import './styles.css';
 
 inject();
@@ -17,8 +23,7 @@ let projectsLoaded = false;
 let loadedRepos = [];
 let projectsState = 'idle';
 
-function createRepoCard(repo) {
-  const card = repoCardModel(repo, translations[currentLanguage]);
+function createRepoCard(card) {
   const link = document.createElement('a');
   const heading = document.createElement('div');
   const name = document.createElement('h3');
@@ -46,26 +51,23 @@ function createRepoCard(repo) {
 }
 
 function renderProjectExplorer() {
-  const text = translations[currentLanguage];
+  const view = explorerPresentation(projectsState, loadedRepos, translations[currentLanguage]);
 
-  if (projectsState === 'loaded') {
-    projectsStatus.hidden = true;
-    repoList.replaceChildren(...loadedRepos.map(createRepoCard));
+  projectsStatus.hidden = view.statusHidden;
+  projectsStatus.textContent = view.statusText;
+
+  if (view.fallback) {
+    const fallback = document.createElement('a');
+    fallback.className = 'repo-list__fallback';
+    fallback.href = view.fallback.href;
+    fallback.target = '_blank';
+    fallback.rel = 'noreferrer';
+    fallback.textContent = view.fallback.label;
+    repoList.replaceChildren(fallback);
     return;
   }
 
-  projectsStatus.hidden = false;
-  projectsStatus.textContent = projectsState === 'error' ? text.githubError : text.githubLoading;
-
-  if (projectsState === 'error') {
-    const fallback = document.createElement('a');
-    fallback.className = 'repo-list__fallback';
-    fallback.href = 'https://github.com/Fierillo?tab=repositories';
-    fallback.target = '_blank';
-    fallback.rel = 'noreferrer';
-    fallback.textContent = text.githubFallback;
-    repoList.replaceChildren(fallback);
-  }
+  repoList.replaceChildren(...view.cards.map(createRepoCard));
 }
 
 function updateMoreProjectsLabel() {

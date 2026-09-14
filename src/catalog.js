@@ -145,3 +145,33 @@ export function moreProjectsCopy(expanded, text) {
     symbol: expanded ? '−' : '＋',
   };
 }
+
+export function explorerPresentation(state, repos, text) {
+  if (state === 'loaded') {
+    return {
+      statusHidden: true,
+      statusText: '',
+      cards: repos.map((repo) => repoCardModel(repo, text)),
+      fallback: null,
+    };
+  }
+
+  if (state === 'error') {
+    return {
+      statusHidden: false,
+      statusText: text.githubError,
+      cards: [],
+      fallback: {
+        href: 'https://github.com/Fierillo?tab=repositories',
+        label: text.githubFallback,
+      },
+    };
+  }
+
+  return {
+    statusHidden: false,
+    statusText: text.githubLoading,
+    cards: [],
+    fallback: null,
+  };
+}

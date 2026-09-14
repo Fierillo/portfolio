@@ -50,23 +50,27 @@ The site is designed as a small pixel-art world rather than a conventional portf
 Requirements: Node.js 20.19 or newer.
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 Create a production build with:
 
 ```bash
-npm run build
+pnpm build
 ```
 
 The generated site is written to `dist/`.
+
+```bash
+pnpm test
+```
 
 ## Deployment
 
 The project is ready for Vercel. Import this repository and use the automatically detected Vite settings:
 
-- Build command: `npm run build`
+- Build command: `pnpm build`
 - Output directory: `dist`
 
 ## Contact

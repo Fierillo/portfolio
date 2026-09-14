@@ -4,13 +4,17 @@
   "version": "0.1.0",
   "license": "ISC",
   "type": "module",
+  "packageManager": "pnpm@11.20.0",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "vitest": "^4.1.11"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1"

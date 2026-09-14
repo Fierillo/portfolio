@@ -4,8 +4,8 @@
   color-scheme: dark;
   --black: #070402;
   --surface: #120a05;
-  --accent: #ff8a1f;
-  --accent-soft: #ffc176;
+  --accent: #f7931a;
+  --accent-soft: #ffbd70;
   --text: #fff0e4;
   --muted: #a98b77;
   --line: #4a2814;
@@ -38,7 +38,7 @@ body::before {
   position: fixed;
   z-index: -2;
   inset: 0;
-  background: radial-gradient(circle at 70% 8%, rgb(255 138 31 / 0.09), transparent 28rem);
+  background: radial-gradient(circle at 70% 8%, rgb(247 147 26 / 0.09), transparent 28rem);
   content: '';
 }
 
@@ -61,7 +61,7 @@ a:focus-visible {
   position: fixed;
   z-index: -1;
   inset: 0;
-  background-image: linear-gradient(90deg, rgb(255 138 31 / 0.04) 1px, transparent 1px);
+  background-image: linear-gradient(90deg, rgb(247 147 26 / 0.04) 1px, transparent 1px);
   background-size: 72px 100%;
   mask-image: linear-gradient(to bottom, black, transparent 75%);
   pointer-events: none;
@@ -82,7 +82,6 @@ a:focus-visible {
   transform: translateY(0);
 }
 
-.site-header,
 main,
 .site-footer {
   width: min(1120px, calc(100% - 48px));
@@ -96,7 +95,9 @@ main,
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
+  width: 100%;
   min-height: 68px;
+  padding-inline: max(24px, calc((100% - 1120px) / 2));
   border-bottom: 1px solid var(--line);
   background: rgb(7 4 2 / 0.88);
   backdrop-filter: blur(14px);
@@ -159,15 +160,16 @@ main,
 }
 
 .hero {
-  position: relative;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: clamp(16px, 4vw, 48px);
   min-height: calc(100vh - 68px);
-  flex-direction: column;
-  justify-content: center;
   padding: 12vh 0 9vh;
 }
 
 .eyebrow {
+  grid-column: 1;
   margin: 0;
   color: var(--accent);
   font-size: 0.68rem;
@@ -182,7 +184,8 @@ main,
 }
 
 .hero h1 {
-  max-width: 930px;
+  grid-column: 1;
+  max-width: 16ch;
   margin: 34px 0 0;
   font-size: clamp(3.5rem, 10vw, 8.4rem);
   font-weight: 400;
@@ -192,15 +195,13 @@ main,
 
 .hero h1 span {
   color: var(--accent);
-  text-shadow: 0 0 34px rgb(255 138 31 / 0.25);
+  text-shadow: 0 0 34px rgb(247 147 26 / 0.25);
 }
 
 .hacker-bear {
-  position: absolute;
-  top: 50%;
-  right: 1%;
-  width: 250px;
-  margin-top: -125px;
+  grid-column: 2;
+  grid-row: 1 / 4;
+  width: min(220px, 26vw);
   opacity: 0.82;
 }
 
@@ -208,7 +209,7 @@ main,
   display: block;
   width: 100%;
   overflow: visible;
-  filter: drop-shadow(0 0 14px rgb(255 138 31 / 0.12));
+  filter: drop-shadow(0 0 14px rgb(247 147 26 / 0.12));
 }
 
 .hacker-bear__figure {
@@ -325,6 +326,7 @@ main,
 
 .hero__footer {
   display: flex;
+  grid-column: 1;
   align-items: flex-end;
   gap: 40px;
   margin-top: 9vh;
@@ -403,7 +405,7 @@ main,
 
 .project:hover {
   padding-inline: 16px;
-  background: rgb(255 138 31 / 0.03);
+  background: rgb(247 147 26 / 0.03);
 }
 
 .project__index {
@@ -446,6 +448,8 @@ main,
 
 .project__links {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 24px;
   margin-top: 22px;
 }
@@ -569,7 +573,7 @@ main,
 
 .about__portrait:hover {
   border-color: var(--accent);
-  box-shadow: 0 0 24px rgb(255 138 31 / 0.12);
+  box-shadow: 0 0 24px rgb(247 147 26 / 0.12);
 }
 
 .about__portrait img {
@@ -669,8 +673,29 @@ main,
   to { opacity: 0.08; transform: scaleX(0.82); }
 }
 
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    row-gap: 22px;
+    padding: 28px 0 56px;
+  }
+
+  .hacker-bear {
+    grid-column: 1;
+    grid-row: auto;
+    width: min(168px, 42vw);
+    margin: 0 auto;
+    opacity: 0.9;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.6rem, 12vw, 5rem);
+    line-height: 0.94;
+  }
+}
+
 @media (max-width: 760px) {
-  .site-header,
   main,
   .site-footer {
     width: min(100% - 30px, 1120px);
@@ -678,28 +703,11 @@ main,
 
   .site-header {
     grid-template-columns: 1fr auto;
+    padding-inline: max(15px, calc((100% - 1120px) / 2));
   }
 
   .main-nav {
     display: none;
-  }
-
-  .hero {
-    min-height: 90vh;
-  }
-
-  .hacker-bear {
-    top: 6%;
-    right: auto;
-    left: 50%;
-    width: 165px;
-    margin-top: 0;
-    margin-left: -82px;
-    opacity: 0.68;
-  }
-
-  .hero h1 {
-    font-size: clamp(3.1rem, 16vw, 5.2rem);
   }
 
   .hero__footer {
@@ -735,12 +743,24 @@ main,
     background: transparent;
   }
 
+  .project__block {
+    flex-basis: 100%;
+    margin-left: 0;
+    text-align: right;
+  }
+
+  .about__portrait {
+    width: 120px;
+    margin-top: 28px;
+  }
+
   .repo-list,
   .contact__links {
     grid-template-columns: 1fr;
   }
 
   .site-footer {
+    align-items: flex-start;
     gap: 14px;
     flex-direction: column;
   }

@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/.well-known/:path*",
+      "destination": "https://walletilla.fierillo.world/.well-known/:path*"
+    }
+  ]
+}

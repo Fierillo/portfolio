@@ -78,6 +78,7 @@ The project is ready for Vercel. Import this repository and use the automaticall
 - [GitHub](https://github.com/Fierillo)
 - [Twitter](https://twitter.com/fierillo)
 - [Telegram](https://t.me/FieriLLo)
+- [Nostr · fierillo@hodl.ar](https://njump.me/npub18ggwqfvqmxt3m6f4ek2q55nghlj9380me364wd67wz8yzpyh8wusevpdmh)
 
 ## License
 

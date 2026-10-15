@@ -29,6 +29,18 @@ function htmlI18nKeys() {
 }
 
 describe('site contracts', () => {
+  it('offers a Nostr profile link with a visible NIP-05 identity in contacts', () => {
+    const contact = html.match(/<section[^>]+id="contacto"[\s\S]*?<\/section>/)?.[0];
+    expect(contact).toMatch(/<a href="https:\/\/njump\.me\/npub1[023456789acdefghjklmnpqrstuvwxyz]{58}" target="_blank" rel="noreferrer">Nostr[\s\S]*?fierillo@hodl\.ar[\s\S]*?<\/a>/);
+  });
+
+  it('lays out contacts in two balanced columns with a separate Nostr identity', () => {
+    const gridRule = css.match(/\.contact__links\s*\{[^}]+\}/)?.[0];
+    expect(gridRule).toMatch(/grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
+    expect(html).toMatch(/Nostr ↗<span class="contact__identity">[^<]+<\/span>/);
+    expect(css).toMatch(/\.contact__identity\s*\{[^}]*display:\s*block/s);
+  });
+
   it('gives every featured project a numeric founding block', () => {
     const articles = featuredProjectArticles();
     expect(articles.length).toBeGreaterThan(0);

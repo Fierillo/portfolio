@@ -50,6 +50,20 @@ describe('site contracts', () => {
     }
   });
 
+  it('features Workshopillo Wallets with demo, source and bilingual copy', () => {
+    const article = featuredProjectArticles().find((article) => article.includes('<h3>Workshopillo Wallets</h3>'));
+    expect(article).toBeDefined();
+    expect(article).toContain('data-project-repo="Fierillo/workshopillo-wallets"');
+    expect(article).not.toContain('%VITE_WORKSHOP_URL%');
+    expect(article).toContain('href="https://github.com/Fierillo/workshopillo-wallets"');
+    expect(article).toContain('data-i18n="workshopDescription"');
+    for (const text of Object.values(translations)) {
+      expect(text.workshopDescription).toEqual(expect.any(String));
+      expect(text.workshopTechnologies).toEqual(expect.any(String));
+    }
+    expect(FEATURED_REPOS).toContain('workshopillo-wallets');
+  });
+
   it('does not include sound or boot UI', () => {
     expect(html).not.toMatch(/sound|boot-screen|AudioContext/i);
     expect(main).not.toMatch(/AudioContext|playTone|soundEnabled/);

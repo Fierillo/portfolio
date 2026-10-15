@@ -4,6 +4,7 @@ export const FEATURED_REPOS = Object.freeze([
   'satoshillo',
   'clipcillo',
   'botillo',
+  'workshopillo-wallets',
   'fierillo',
 ]);
 
@@ -36,6 +37,8 @@ export const translations = {
     clipTechnologies: 'Tecnologías de Clipcillo',
     botDescription: 'Bot de Bitcoin para Discord y Telegram con predicciones y pagos Lightning.',
     botTechnologies: 'Tecnologías de Botillo',
+    workshopDescription: 'Taller interactivo para entender Bitcoin Lightning y usar tu primera wallet.',
+    workshopTechnologies: 'Tecnologías de Workshopillo Wallets',
     viewProject: 'Ver proyecto',
     viewCode: 'Ver código',
     playNow: 'Jugar',
@@ -91,6 +94,8 @@ export const translations = {
     clipTechnologies: 'Clipcillo technologies',
     botDescription: 'A Bitcoin bot for Discord and Telegram with predictions and Lightning payments.',
     botTechnologies: 'Botillo technologies',
+    workshopDescription: 'An interactive workshop to understand Bitcoin Lightning and use your first wallet.',
+    workshopTechnologies: 'Workshopillo Wallets technologies',
     viewProject: 'View project',
     viewCode: 'View code',
     playNow: 'Play',

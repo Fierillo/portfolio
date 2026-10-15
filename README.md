@@ -26,6 +26,8 @@ The site is designed as a small pixel-art world rather than a conventional portf
 - [Satoshillo](https://github.com/Fierillo/satoshillo): a browser extension that converts ARS, USD, EUR, and JPY prices into satoshis on any website.
 - [Clipcillo](https://github.com/Fierillo/clipcillo): a clip editor with automatic subtitle transcription, silence detection, and AI-assisted editing tools.
 
+- [Workshopillo Wallets](https://github.com/Fierillo/workshopillo-wallets): an interactive workshop to understand Bitcoin Lightning and use your first wallet.
+
 ## Features
 
 - Responsive pixel-art interface.

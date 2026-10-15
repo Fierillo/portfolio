@@ -29,6 +29,16 @@ function htmlI18nKeys() {
 }
 
 describe('site contracts', () => {
+  it('loads every featured Website from its repository while preserving source and download links', () => {
+    for (const article of featuredProjectArticles()) {
+      const repo = article.match(/href="https:\/\/github\.com\/([^"/]+\/[^"/]+)"[^>]*(?:data-i18n="code"|><span data-i18n="viewCode")/)?.[1];
+      expect(repo).toBeDefined();
+      expect(article).toContain(`data-project-repo="${repo}"`);
+      expect(article).not.toMatch(/href="https:\/\/[^"/]+\.vercel\.app/);
+    }
+    expect(html).toMatch(/href="https:\/\/github\.com\/[^"/]+\/[^"/]+\/releases\/latest"[^>]*><span data-i18n="download"/);
+  });
+
   it('offers a Nostr profile link with a visible NIP-05 identity in contacts', () => {
     const contact = html.match(/<section[^>]+id="contacto"[\s\S]*?<\/section>/)?.[0];
     expect(contact).toMatch(/<a href="https:\/\/njump\.me\/npub1[023456789acdefghjklmnpqrstuvwxyz]{58}" target="_blank" rel="noreferrer">Nostr[\s\S]*?fierillo@hodl\.ar[\s\S]*?<\/a>/);

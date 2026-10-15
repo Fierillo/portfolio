@@ -25,8 +25,12 @@ The site is designed as a small pixel-art world rather than a conventional portf
 - [Futbolcillo](https://github.com/Fierillo/Futbolcillo): a turn-based 2D football game with pool-style physics, Nostr challenges, and multiplayer matches.
 - [Satoshillo](https://github.com/Fierillo/satoshillo): a browser extension that converts ARS, USD, EUR, and JPY prices into satoshis on any website.
 - [Clipcillo](https://github.com/Fierillo/clipcillo): a clip editor with automatic subtitle transcription, silence detection, and AI-assisted editing tools.
-
 - [Workshopillo Wallets](https://github.com/Fierillo/workshopillo-wallets): an interactive workshop to understand Bitcoin Lightning and use your first wallet.
+
+Every featured project's demo link reads its repository's Website from the public
+GitHub API on page load. Changing Website updates the destination without editing
+or redeploying the portfolio. If GitHub is unavailable or Website is missing, the
+link opens the repository instead. Source and release-download links stay separate.
 
 ## Features
 

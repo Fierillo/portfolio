@@ -1,3 +1,17 @@
+export async function updateProjectHomepage(link, request = fetch) {
+  try {
+    const response = await request(`https://api.github.com/repos/${link.dataset.projectRepo}`);
+    if (!response.ok) return;
+    const repo = await response.json();
+    const homepage = new URL(repo.homepage);
+    if (homepage.protocol === 'https:' || homepage.protocol === 'http:') {
+      link.href = repo.homepage;
+    }
+  } catch {
+    // Keep the repository fallback when GitHub or Website is unavailable.
+  }
+}
+
 export const FEATURED_REPOS = Object.freeze([
   'monitorcillo',
   'futbolcillo',

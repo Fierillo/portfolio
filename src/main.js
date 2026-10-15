@@ -3,12 +3,17 @@ import {
   explorerPresentation,
   filterExplorerRepos,
   moreProjectsCopy,
+  updateProjectHomepage,
   resolveLanguage,
   translations,
 } from './catalog.js';
 import './styles.css';
 
 inject();
+
+document.querySelectorAll('[data-project-repo]').forEach((link) => {
+  updateProjectHomepage(link);
+});
 
 const languageButtons = document.querySelectorAll('[data-language]');
 const moreProjectsToggle = document.querySelector('#more-projects-toggle');

@@ -74,6 +74,19 @@ describe('site contracts', () => {
     expect(FEATURED_REPOS).toContain('workshopillo-wallets');
   });
 
+  it('features Totemcillo with demo, source and bilingual copy', () => {
+    const article = featuredProjectArticles().find((article) => article.includes('<h3>Totemcillo</h3>'));
+    expect(article).toBeDefined();
+    expect(article).toContain('data-project-repo="Fierillo/totemcillo"');
+    expect(article).toContain('href="https://github.com/Fierillo/totemcillo"');
+    expect(article).toContain('data-i18n="totemDescription"');
+    for (const text of Object.values(translations)) {
+      expect(text.totemDescription).toEqual(expect.any(String));
+      expect(text.totemTechnologies).toEqual(expect.any(String));
+    }
+    expect(FEATURED_REPOS).toContain('totemcillo');
+  });
+
   it('does not include sound or boot UI', () => {
     expect(html).not.toMatch(/sound|boot-screen|AudioContext/i);
     expect(main).not.toMatch(/AudioContext|playTone|soundEnabled/);

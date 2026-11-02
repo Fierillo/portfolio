@@ -19,6 +19,7 @@ export const FEATURED_REPOS = Object.freeze([
   'clipcillo',
   'botillo',
   'workshopillo-wallets',
+  'totemcillo',
   'fierillo',
 ]);
 
@@ -53,6 +54,8 @@ export const translations = {
     botTechnologies: 'Tecnologías de Botillo',
     workshopDescription: 'Taller interactivo para entender Bitcoin Lightning y usar tu primera wallet.',
     workshopTechnologies: 'Tecnologías de Workshopillo Wallets',
+    totemDescription: 'Tótem de La Crypta que muestra en vivo notas Nostr con #lacrypta y los zaps que reciben.',
+    totemTechnologies: 'Tecnologías de Totemcillo',
     viewProject: 'Ver proyecto',
     viewCode: 'Ver código',
     playNow: 'Jugar',
@@ -110,6 +113,8 @@ export const translations = {
     botTechnologies: 'Botillo technologies',
     workshopDescription: 'An interactive workshop to understand Bitcoin Lightning and use your first wallet.',
     workshopTechnologies: 'Workshopillo Wallets technologies',
+    totemDescription: 'La Crypta\'s totem screen showing live #lacrypta Nostr notes and the zaps they receive.',
+    totemTechnologies: 'Totemcillo technologies',
     viewProject: 'View project',
     viewCode: 'View code',
     playNow: 'Play',

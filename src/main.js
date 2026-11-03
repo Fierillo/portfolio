@@ -1,6 +1,5 @@
 import { inject } from '@vercel/analytics';
 import {
-  buildFeaturedSnapshot,
   createFeaturedCard,
   explorerPresentation,
   featuredCardModel,
@@ -202,17 +201,16 @@ async function readSnapshot() {
 }
 
 async function loadFeaturedProjects() {
-  const cache = pickFeaturedCache(await readSnapshot(), readStoredFeatured());
+  const snapshot = await readSnapshot();
+  const cache = pickFeaturedCache(snapshot, readStoredFeatured());
   renderFeatured(cache);
-
+  if (snapshot) localStorage.setItem(FEATURED_CACHE_KEY, JSON.stringify(cache));
+  if (!projectsLoaded) return;
   try {
-    const repos = await reposRequest;
-    const live = await buildFeaturedSnapshot(repos, fetch, Date.now(), cache);
-    localStorage.setItem(FEATURED_CACHE_KEY, JSON.stringify(live));
-    if (projectsLoaded) loadedRepos = filterExplorerRepos(repos, live.repos.map((repo) => repo.name));
-    renderFeatured(live);
+    loadedRepos = filterExplorerRepos(await reposRequest, featuredNames);
+    renderProjectExplorer();
   } catch {
-    // Keep the cached featured cards when GitHub is unavailable.
+    // The explorer already shows its own error state.
   }
 }
 

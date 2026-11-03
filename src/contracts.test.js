@@ -25,6 +25,10 @@ describe('site contracts', () => {
     expect(main).toContain("fetch('/featured.json')");
   });
 
+  it('never builds featured cards live in the browser (pinned repos need a server-side token)', () => {
+    expect(main).not.toMatch(/buildFeaturedSnapshot|fetchPinnedRepos|graphql|GITHUB_TOKEN/i);
+  });
+
   it('offers a Nostr profile link with a visible NIP-05 identity in contacts', () => {
     const contact = html.match(/<section[^>]+id="contacto"[\s\S]*?<\/section>/)?.[0];
     expect(contact).toMatch(/<a href="https:\/\/njump\.me\/npub1[023456789acdefghjklmnpqrstuvwxyz]{58}" target="_blank" rel="noreferrer">Nostr[\s\S]*?fierillo@hodl\.ar[\s\S]*?<\/a>/);

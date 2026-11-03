@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prebuild": "node scripts/featured-snapshot.js"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

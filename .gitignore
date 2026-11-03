@@ -3,3 +3,4 @@ dist/
 .vercel/
 *.local
 .vercel
+public/featured.json

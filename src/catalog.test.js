@@ -1,7 +1,5 @@
-import { describe, expect, it, vi } from 'vitest';
-import * as catalog from './catalog.js';
+import { describe, expect, it } from 'vitest';
 import {
-  FEATURED_REPOS,
   explorerPresentation,
   filterExplorerRepos,
   moreProjectsCopy,
@@ -22,38 +20,6 @@ describe('resolveLanguage', () => {
   });
 });
 
-describe('updateProjectHomepage', () => {
-  it('keeps the repository fallback when GitHub fails or Website is not an HTTP URL', async () => {
-    const fallback = 'https://github.com/someone/demo';
-    const responses = [
-      () => Promise.reject(new Error('offline')),
-      async () => ({ ok: false, json: async () => ({ homepage: 'https://ignored.example' }) }),
-      ...[null, '', 'not a URL', 'javascript:alert(1)', 'ftp://files.example'].map((homepage) =>
-        async () => ({ ok: true, json: async () => ({ homepage }) }),
-      ),
-    ];
-    for (const request of responses) {
-      const link = { dataset: { projectRepo: 'someone/demo' }, href: fallback };
-      await catalog.updateProjectHomepage(link, request);
-      expect(link.href).toBe(fallback);
-    }
-  });
-
-  it('refreshes the link from the repository Website on each load', async () => {
-    const repo = 'someone/demo';
-    const link = { dataset: { projectRepo: repo }, href: `https://github.com/${repo}` };
-    const homepages = ['https://first.example', 'https://new.example/workshop'];
-    const request = vi.fn();
-    for (const homepage of homepages) {
-      request.mockResolvedValueOnce({ ok: true, json: async () => ({ homepage }) });
-      expect(catalog.updateProjectHomepage).toBeTypeOf('function');
-      await catalog.updateProjectHomepage(link, request);
-      expect(link.href).toBe(homepage);
-    }
-    expect(request).toHaveBeenCalledWith(`https://api.github.com/repos/${repo}`);
-  });
-});
-
 describe('filterExplorerRepos', () => {
   it('hides forks and keeps unrelated repositories', () => {
     const repos = [
@@ -66,8 +32,9 @@ describe('filterExplorerRepos', () => {
   });
 
   it('excludes every featured name regardless of casing', () => {
-    const repos = FEATURED_REPOS.map((name) => ({ name: name.toUpperCase(), fork: false }));
-    expect(filterExplorerRepos(repos)).toEqual([]);
+    const featured = ['Totemcillo', 'botillo'];
+    const repos = featured.map((name) => ({ name: name.toUpperCase(), fork: false }));
+    expect(filterExplorerRepos(repos, featured)).toEqual([]);
   });
 });
 

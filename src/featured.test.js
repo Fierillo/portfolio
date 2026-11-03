@@ -79,18 +79,12 @@ describe('featuredCardModel', () => {
       tags: ['TypeScript', 'nostr'],
       repoUrl: 'https://github.com/Fierillo/demo',
       projectUrl: 'https://demo.example',
-      descriptionKey: null,
     });
     const unsafe = featuredCardModel(repo({ homepage: 'javascript:x', html_url: 'javascript:y' }), 1);
     expect(unsafe.repoUrl).toBe('https://github.com/Fierillo');
     expect(unsafe.projectUrl).toBe('https://github.com/Fierillo');
   });
 
-  it('reuses bilingual copy for repos already described in the catalog', () => {
-    const model = featuredCardModel(repo({ name: 'Totemcillo' }), 1);
-    expect(model.descriptionKey).toBe('totemDescription');
-    expect(translations.en[model.descriptionKey]).toEqual(expect.any(String));
-  });
 });
 
 describe('foundingBlock', () => {

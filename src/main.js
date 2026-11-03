@@ -1,23 +1,18 @@
 import { inject } from '@vercel/analytics';
 import {
+  buildFeaturedSnapshot,
   createFeaturedCard,
   explorerPresentation,
   featuredCardModel,
-  featuredRepos,
-  foundingBlock,
+  pickFeaturedCache,
   filterExplorerRepos,
   moreProjectsCopy,
-  updateProjectHomepage,
   resolveLanguage,
   translations,
 } from './catalog.js';
 import './styles.css';
 
 inject();
-
-document.querySelectorAll('[data-project-repo]').forEach((link) => {
-  updateProjectHomepage(link);
-});
 
 const languageButtons = document.querySelectorAll('[data-language]');
 const moreProjectsToggle = document.querySelector('#more-projects-toggle');
@@ -31,7 +26,8 @@ let currentLanguage = resolveLanguage(localStorage.getItem('fierillolandia-langu
 let projectsLoaded = false;
 let loadedRepos = [];
 let projectsState = 'idle';
-let featuredNames;
+let featuredNames = [];
+const FEATURED_CACHE_KEY = 'fierillolandia-featured';
 const reposRequest = fetch('https://api.github.com/users/Fierillo/repos?per_page=100&sort=updated').then((response) => {
   if (!response.ok) throw new Error(`GitHub responded ${response.status}`);
   return response.json();
@@ -169,23 +165,45 @@ async function updateBlockHeight() {
   }
 }
 
-async function loadFeaturedProjects() {
-  try {
-    const repos = featuredRepos(await reposRequest);
-    if (repos.length === 0) return;
+function renderFeatured(cache) {
+  const cards = cache.repos.map((repo, index) =>
+    createFeaturedCard(featuredCardModel(repo, index + 1), document, translations[currentLanguage], repo.block),
+  );
+  featuredNames = cache.repos.map((repo) => repo.name);
+  document.querySelector('.project-list').replaceChildren(...cards);
+  cards.forEach((card) => observer.observe(card));
+  applyLanguage(currentLanguage);
+}
 
-    const models = repos.map((repo, index) => featuredCardModel(repo, index + 1));
-    const blocks = await Promise.all(models.map((model) => foundingBlock(model.createdAt)));
-    const cards = models.map((model, index) =>
-      createFeaturedCard(model, document, translations[currentLanguage], blocks[index]),
-    );
-    featuredNames = repos.map((repo) => repo.name);
-    document.querySelector('.project-list').replaceChildren(...cards);
-    cards.forEach((card) => observer.observe(card));
-    if (projectsLoaded) loadedRepos = filterExplorerRepos(await reposRequest, featuredNames);
-    applyLanguage(currentLanguage);
+function readStoredFeatured() {
+  try {
+    return JSON.parse(localStorage.getItem(FEATURED_CACHE_KEY));
   } catch {
-    // Keep the static featured cards when GitHub is unavailable.
+    return null;
+  }
+}
+
+async function readSnapshot() {
+  try {
+    const response = await fetch('/featured.json');
+    return response.ok ? await response.json() : null;
+  } catch {
+    return null;
+  }
+}
+
+async function loadFeaturedProjects() {
+  const cache = pickFeaturedCache(await readSnapshot(), readStoredFeatured());
+  renderFeatured(cache);
+
+  try {
+    const repos = await reposRequest;
+    const live = await buildFeaturedSnapshot(repos, fetch, Date.now(), cache);
+    localStorage.setItem(FEATURED_CACHE_KEY, JSON.stringify(live));
+    if (projectsLoaded) loadedRepos = filterExplorerRepos(repos, live.repos.map((repo) => repo.name));
+    renderFeatured(live);
+  } catch {
+    // Keep the cached featured cards when GitHub is unavailable.
   }
 }
 

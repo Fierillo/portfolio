@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { FEATURED_REPOS, translations } from './catalog.js';
+import { translations } from './catalog.js';
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const css = readFileSync(new URL('./styles.css', import.meta.url), 'utf8');
@@ -8,16 +8,6 @@ const main = readFileSync(new URL('./main.js', import.meta.url), 'utf8');
 
 function featuredProjectArticles() {
   return [...html.matchAll(/<article class="project\b[^"]*">[\s\S]*?<\/article>/g)].map((match) => match[0]);
-}
-
-function showcaseRepoNames() {
-  return [
-    ...new Set(
-      [...html.matchAll(/github\.com\/Fierillo\/([^"/?#]+)/gi)].map((match) => match[1].toLowerCase()),
-    ),
-  ].filter((name) =>
-    featuredProjectArticles().some((article) => article.toLowerCase().includes(name)),
-  );
 }
 
 function htmlI18nKeys() {
@@ -29,14 +19,10 @@ function htmlI18nKeys() {
 }
 
 describe('site contracts', () => {
-  it('loads every featured Website from its repository while preserving source and download links', () => {
-    for (const article of featuredProjectArticles()) {
-      const repo = article.match(/href="https:\/\/github\.com\/([^"/]+\/[^"/]+)"[^>]*(?:data-i18n="code"|><span data-i18n="viewCode")/)?.[1];
-      expect(repo).toBeDefined();
-      expect(article).toContain(`data-project-repo="${repo}"`);
-      expect(article).not.toMatch(/href="https:\/\/[^"/]+\.vercel\.app/);
-    }
-    expect(html).toMatch(/href="https:\/\/github\.com\/[^"/]+\/[^"/]+\/releases\/latest"[^>]*><span data-i18n="download"/);
+  it('ships no hardcoded featured cards so they come from the GitHub cache', () => {
+    expect(featuredProjectArticles()).toEqual([]);
+    expect(html).toMatch(/<div class="project-list">\s*<\/div>/);
+    expect(main).toContain("fetch('/featured.json')");
   });
 
   it('offers a Nostr profile link with a visible NIP-05 identity in contacts', () => {
@@ -49,42 +35,6 @@ describe('site contracts', () => {
     expect(gridRule).toMatch(/grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
     expect(html).toMatch(/Nostr ↗<span class="contact__identity">[^<]+<\/span>/);
     expect(css).toMatch(/\.contact__identity\s*\{[^}]*display:\s*block/s);
-  });
-
-  it('gives every featured project a numeric founding block', () => {
-    const articles = featuredProjectArticles();
-    expect(articles.length).toBeGreaterThan(0);
-
-    for (const article of articles) {
-      expect(article).toMatch(/data-i18n="foundedBlock">[^<]+<\/span>\s*\d+/);
-    }
-  });
-
-  it('features Workshopillo Wallets with demo, source and bilingual copy', () => {
-    const article = featuredProjectArticles().find((article) => article.includes('<h3>Workshopillo Wallets</h3>'));
-    expect(article).toBeDefined();
-    expect(article).toContain('data-project-repo="Fierillo/workshopillo-wallets"');
-    expect(article).not.toContain('%VITE_WORKSHOP_URL%');
-    expect(article).toContain('href="https://github.com/Fierillo/workshopillo-wallets"');
-    expect(article).toContain('data-i18n="workshopDescription"');
-    for (const text of Object.values(translations)) {
-      expect(text.workshopDescription).toEqual(expect.any(String));
-      expect(text.workshopTechnologies).toEqual(expect.any(String));
-    }
-    expect(FEATURED_REPOS).toContain('workshopillo-wallets');
-  });
-
-  it('features Totemcillo with demo, source and bilingual copy', () => {
-    const article = featuredProjectArticles().find((article) => article.includes('<h3>Totemcillo</h3>'));
-    expect(article).toBeDefined();
-    expect(article).toContain('data-project-repo="Fierillo/totemcillo"');
-    expect(article).toContain('href="https://github.com/Fierillo/totemcillo"');
-    expect(article).toContain('data-i18n="totemDescription"');
-    for (const text of Object.values(translations)) {
-      expect(text.totemDescription).toEqual(expect.any(String));
-      expect(text.totemTechnologies).toEqual(expect.any(String));
-    }
-    expect(FEATURED_REPOS).toContain('totemcillo');
   });
 
   it('does not include sound or boot UI', () => {
@@ -105,15 +55,6 @@ describe('site contracts', () => {
     for (const key of keys) {
       expect(translations.es).toHaveProperty(key);
       expect(translations.en).toHaveProperty(key);
-    }
-  });
-
-  it('keeps showcase github repos inside the featured exclusion set', () => {
-    const showcase = showcaseRepoNames();
-    expect(showcase.length).toBeGreaterThan(0);
-
-    for (const name of showcase) {
-      expect(FEATURED_REPOS).toContain(name);
     }
   });
 

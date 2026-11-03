@@ -7,32 +7,9 @@ export function safeHttpUrl(value) {
   }
 }
 
-export async function updateProjectHomepage(link, request = fetch) {
-  try {
-    const response = await request(`https://api.github.com/repos/${link.dataset.projectRepo}`);
-    if (!response.ok) return;
-    const homepage = safeHttpUrl((await response.json()).homepage);
-    if (homepage) link.href = homepage;
-  } catch {
-    // Keep the repository fallback when GitHub or Website is unavailable.
-  }
-}
-
-export const FEATURED_REPOS = Object.freeze([
-  'monitorcillo',
-  'futbolcillo',
-  'satoshillo',
-  'clipcillo',
-  'botillo',
-  'workshopillo-wallets',
-  'totemcillo',
-  'fierillo',
-]);
-
 export const translations = {
   es: {
     metaTitle: 'Fierillolandia | Código, Bitcoin y libertad',
-    metaDescription: 'Fierillolandia: proyectos, código y Bitcoin desde el rincón digital de un desarrollador autodidacta.',
     skipLink: 'Saltar al contenido',
     brandHome: 'Fierillolandia, inicio',
     mainNavigation: 'Navegación principal',
@@ -48,20 +25,6 @@ export const translations = {
     projectsEyebrow: 'TRABAJO SELECCIONADO',
     projectsTitle: 'Proyectos',
     projectsIntro: 'Software abierto enfocado en datos, Bitcoin y herramientas útiles.',
-    monitorDescription: 'Monitor macroeconómico de Argentina con datos oficiales comparables.',
-    monitorTechnologies: 'Tecnologías de Monitorcillo',
-    footballDescription: 'Juego de fútbol 2D por turnos con física, desafíos Nostr y multijugador.',
-    footballTechnologies: 'Tecnologías de Futbolcillo',
-    satsDescription: 'Extensión que convierte precios en monedas fiat a satoshis en cualquier web.',
-    satsTechnologies: 'Tecnologías de Satoshillo',
-    clipDescription: 'Editor de clips con transcripción, subtítulos y detección de silencios.',
-    clipTechnologies: 'Tecnologías de Clipcillo',
-    botDescription: 'Bot de Bitcoin para Discord y Telegram con predicciones y pagos Lightning.',
-    botTechnologies: 'Tecnologías de Botillo',
-    workshopDescription: 'Taller interactivo para entender Bitcoin Lightning y usar tu primera wallet.',
-    workshopTechnologies: 'Tecnologías de Workshopillo Wallets',
-    totemDescription: 'Tótem de La Crypta que muestra en vivo notas Nostr con #lacrypta y los zaps que reciben.',
-    totemTechnologies: 'Tecnologías de Totemcillo',
     viewProject: 'Ver proyecto',
     viewCode: 'Ver código',
     playNow: 'Jugar',
@@ -74,7 +37,6 @@ export const translations = {
     githubFallback: 'Abrir GitHub ↗',
     archivedRepo: 'ARCHIVADO',
     codeFallback: 'Código',
-    emptyDescription: 'Proyecto disponible en GitHub.',
     aboutEyebrow: 'SOBRE MÍ',
     aboutTitle: 'Construir para entender.',
     avatarAlt: 'Avatar de Fierillo',
@@ -91,7 +53,6 @@ export const translations = {
   },
   en: {
     metaTitle: 'Fierillolandia | Code, Bitcoin, and freedom',
-    metaDescription: 'Fierillolandia: projects, code, and Bitcoin from a self-taught developer.',
     skipLink: 'Skip to content',
     brandHome: 'Fierillolandia, home',
     mainNavigation: 'Main navigation',
@@ -107,20 +68,6 @@ export const translations = {
     projectsEyebrow: 'SELECTED WORK',
     projectsTitle: 'Projects',
     projectsIntro: 'Open software focused on data, Bitcoin, and useful tools.',
-    monitorDescription: 'An Argentine macroeconomic monitor with comparable official data.',
-    monitorTechnologies: 'Monitorcillo technologies',
-    footballDescription: 'A turn-based 2D football game with physics, Nostr challenges, and multiplayer.',
-    footballTechnologies: 'Futbolcillo technologies',
-    satsDescription: 'An extension that converts fiat prices into satoshis on any website.',
-    satsTechnologies: 'Satoshillo technologies',
-    clipDescription: 'A clip editor with transcription, subtitles, and silence detection.',
-    clipTechnologies: 'Clipcillo technologies',
-    botDescription: 'A Bitcoin bot for Discord and Telegram with predictions and Lightning payments.',
-    botTechnologies: 'Botillo technologies',
-    workshopDescription: 'An interactive workshop to understand Bitcoin Lightning and use your first wallet.',
-    workshopTechnologies: 'Workshopillo Wallets technologies',
-    totemDescription: 'La Crypta\'s totem screen showing live #lacrypta Nostr notes and the zaps they receive.',
-    totemTechnologies: 'Totemcillo technologies',
     viewProject: 'View project',
     viewCode: 'View code',
     playNow: 'Play',
@@ -133,7 +80,6 @@ export const translations = {
     githubFallback: 'Open GitHub ↗',
     archivedRepo: 'ARCHIVED',
     codeFallback: 'Code',
-    emptyDescription: 'Project available on GitHub.',
     aboutEyebrow: 'ABOUT',
     aboutTitle: 'Build to understand.',
     avatarAlt: 'Fierillo avatar',
@@ -154,7 +100,7 @@ export function resolveLanguage(stored) {
   return stored === 'en' ? 'en' : 'es';
 }
 
-export function filterExplorerRepos(repos, featuredNames = FEATURED_REPOS) {
+export function filterExplorerRepos(repos, featuredNames = []) {
   const featured = new Set(featuredNames.map((name) => name.toLowerCase()));
   return repos.filter((repo) => !repo.fork && !featured.has(repo.name.toLowerCase()));
 }
@@ -206,16 +152,6 @@ export function explorerPresentation(state, repos, text) {
   };
 }
 
-const DESCRIPTION_KEYS = Object.freeze({
-  monitorcillo: 'monitorDescription',
-  futbolcillo: 'footballDescription',
-  satoshillo: 'satsDescription',
-  clipcillo: 'clipDescription',
-  botillo: 'botDescription',
-  'workshopillo-wallets': 'workshopDescription',
-  totemcillo: 'totemDescription',
-});
-
 const PROFILE_URL = 'https://github.com/Fierillo';
 
 export function featuredRepos(repos) {
@@ -229,7 +165,6 @@ export function featuredCardModel(repo, position) {
     index: String(position).padStart(2, '0'),
     name: repo.name,
     description: repo.description || '',
-    descriptionKey: DESCRIPTION_KEYS[repo.name.toLowerCase()] || null,
     tags: [repo.language, ...repo.topics.filter((topic) => topic !== 'featured')].filter(Boolean),
     repoUrl,
     projectUrl: safeHttpUrl(repo.homepage) || repoUrl,
@@ -276,8 +211,7 @@ export function createFeaturedCard(model, doc, text, block = null) {
   tags.append(...model.tags.map((tag) => element(doc, 'li', '', tag)));
   identity.append(element(doc, 'h3', '', model.name), tags);
 
-  const description = element(doc, 'p', '', model.descriptionKey ? text[model.descriptionKey] : model.description);
-  if (model.descriptionKey) description.dataset.i18n = model.descriptionKey;
+  const description = element(doc, 'p', '', model.description);
 
   const blockLabel = element(doc, 'span', '', text.foundedBlock);
   blockLabel.dataset.i18n = 'foundedBlock';

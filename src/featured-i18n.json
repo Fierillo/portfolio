@@ -1,1 +1,37 @@
-{}
+{
+  "Futbolcillo": {
+    "source": "Minimalist turn-based 2D football game - Pool style physics",
+    "en": "Minimalist turn-based 2D football game - Pool style physics",
+    "es": "Juego de fútbol 2D basado en el turno mínimo - Física de estilo de piscina"
+  },
+  "botillo": {
+    "source": "Bitcoin bot for Discord and Telegram with price tracking, prediction rounds, leaderboards, automated updates, and Lightning payments via NWC.",
+    "en": "Bitcoin bot for Discord and Telegram with price tracking, prediction rounds, leaderboards, automated updates, and Lightning payments via NWC.",
+    "es": "Bitcoin bot for Discord and Telegram con seguimiento de precios, rondas de predicción, tablas de clasificación, actualizaciones automatizadas y pagos Lightning a través de NWC."
+  },
+  "clipcillo": {
+    "source": "A simple clip editor with automatic subtitle transcription, silent detector and another interesting things...",
+    "en": "A simple clip editor with automatic subtitle transcription, silent detector and another interesting things...",
+    "es": "Un simple editor de clips con transcripción automática de subtítulos, detector silencioso y otras cosas interesantes..."
+  },
+  "monitorcillo": {
+    "source": "Monitor macroeconómico de la Argentina, actualizado con fuentes oficiales y diseñado para leer datos rápido.",
+    "es": "Monitor macroeconómico de la Argentina, actualizado con fuentes oficiales y diseñado para leer datos rápido.",
+    "en": "Argentina's macroeconomic monitor, updated with official sources and designed to read data quickly."
+  },
+  "satoshillo": {
+    "source": "Browser extension that converts ARS, USD, EUR and JPY prices into satoshis (BTC) on any web page.",
+    "en": "Browser extension that converts ARS, USD, EUR and JPY prices into satoshis (BTC) on any web page.",
+    "es": "Extensión del navegador que convierte los precios de ARS, USD, EUR y JPY en satoshis (BTC) en cualquier página web."
+  },
+  "totemcillo": {
+    "source": "La Crypta's totem screen: publish live Nostr notes tagging (#) or zap the existent posts",
+    "en": "La Crypta's totem screen: publish live Nostr notes tagging (#) or zap the existent posts",
+    "es": "Pantalla totem de La Crypta: publicar notas Nostr en vivo etiquetando (#) o zapar las entradas existentes"
+  },
+  "workshopillo-wallets": {
+    "source": "Web presentation for La Crypta's Lightning wallets workshop: Bitcoin and Lightning explained with animations, key custody, and a wallet comparison.",
+    "en": "Web presentation for La Crypta's Lightning wallets workshop: Bitcoin and Lightning explained with animations, key custody, and a wallet comparison.",
+    "es": "Presentación web para el taller de carteras Lightning de La Crypta: Bitcoin y Lightning explicado con animaciones, custodia clave y una comparación de cartera."
+  }
+}

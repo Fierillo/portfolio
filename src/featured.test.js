@@ -83,7 +83,7 @@ describe('featuredCardModel', () => {
     });
     const unsafe = featuredCardModel(repo({ homepage: 'javascript:x', html_url: 'javascript:y' }), 1);
     expect(unsafe.repoUrl).toBe('https://github.com/Fierillo');
-    expect(unsafe.projectUrl).toBe('https://github.com/Fierillo');
+    expect(unsafe.projectUrl).toBeNull();
   });
 
 });
@@ -113,6 +113,15 @@ describe('createFeaturedCard', () => {
     expect(nodes.some((n) => n.tagName === 'p' && n.textContent === 'A <b>demo</b>')).toBe(true);
     expect(nodes.filter((n) => n.tagName === 'li').map((n) => n.textContent)).toEqual(['TypeScript', 'nostr']);
     expect(nodes.find((n) => n.className === 'project__block').hidden).toBe(true);
+  });
+
+  it('shows only the code link when there is no distinct homepage', () => {
+    const links = (overrides) => walk(createFeaturedCard(featuredCardModel(repo(overrides), 1), fakeDocument(), translations.es))
+      .filter((n) => n.tagName === 'a').map((n) => n.href);
+    expect(links({})).toEqual(['https://demo.example', 'https://github.com/Fierillo/demo']);
+    for (const homepage of [null, '', 'HTTP://GitHub.com/fierillo/demo/', 'https://github.com/Fierillo/demo']) {
+      expect(links({ homepage })).toEqual(['https://github.com/Fierillo/demo']);
+    }
   });
 
   it('shows the founding block when available', () => {

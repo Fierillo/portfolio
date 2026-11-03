@@ -175,6 +175,13 @@ export function localizeDescriptions(nodes, lang) {
   });
 }
 
+const comparableUrl = (url) => url.toLowerCase().replace(/^https?:\/\//, '').replace(/\/+$/, '');
+
+function distinctHomepage(homepage, repoUrl) {
+  const url = safeHttpUrl(homepage);
+  return url && comparableUrl(url) !== comparableUrl(repoUrl) ? url : null;
+}
+
 export function featuredCardModel(repo, position, i18n = {}) {
   const repoUrl = safeHttpUrl(repo.html_url) || PROFILE_URL;
   return {
@@ -183,7 +190,7 @@ export function featuredCardModel(repo, position, i18n = {}) {
     descriptions: localizedDescriptions(repo, i18n),
     tags: [repo.language, ...repo.topics.filter((topic) => topic !== 'featured')].filter(Boolean),
     repoUrl,
-    projectUrl: safeHttpUrl(repo.homepage) || repoUrl,
+    projectUrl: distinctHomepage(repo.homepage, repoUrl),
     createdAt: repo.created_at,
   };
 }
@@ -239,8 +246,8 @@ export function createFeaturedCard(model, doc, text, block = null, lang = 'es') 
   blockInfo.hidden = block === null;
 
   const links = element(doc, 'div', 'project__links');
+  if (model.projectUrl) links.append(externalLink(doc, model.projectUrl, 'viewProject', text.viewProject));
   links.append(
-    externalLink(doc, model.projectUrl, 'viewProject', text.viewProject),
     externalLink(doc, model.repoUrl, 'viewCode', text.viewCode),
     blockInfo,
   );

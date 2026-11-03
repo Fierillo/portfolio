@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import {
   createFeaturedCard,
   featuredCardModel,
-  featuredRepos,
+  pinnedRepos,
+  fetchPinnedRepos,
   filterExplorerRepos,
   foundingBlock,
   localizeDescriptions,
@@ -19,7 +20,7 @@ const repo = (overrides = {}) => ({
   homepage: 'https://demo.example',
   description: 'A <b>demo</b>',
   language: 'TypeScript',
-  topics: ['featured', 'nostr'],
+  topics: ['nostr'],
   created_at: '2026-10-15T04:47:15Z',
   ...overrides,
 });
@@ -48,13 +49,57 @@ function walk(el, out = []) {
   return out;
 }
 
-describe('featuredRepos', () => {
-  it('keeps only non-fork repos tagged with the featured topic', () => {
-    const repos = [repo(), repo({ name: 'plain', topics: ['nostr'] }), repo({ name: 'fork', fork: true }), repo({ name: 'none', topics: undefined })];
-    expect(featuredRepos(repos).map((r) => r.name)).toEqual(['demo']);
-    expect(featuredRepos(null)).toEqual([]);
+const pinnedNode = (overrides = {}) => ({
+  name: 'demo',
+  url: 'https://github.com/Fierillo/demo',
+  homepageUrl: 'https://demo.example',
+  description: 'A <b>demo</b>',
+  primaryLanguage: { name: 'TypeScript' },
+  repositoryTopics: { nodes: [{ topic: { name: 'nostr' } }] },
+  createdAt: '2026-10-15T04:47:15Z',
+  ...overrides,
+});
+const pinnedResponse = (nodes) => ({ data: { user: { pinnedItems: { nodes } } } });
+
+describe('pinnedRepos', () => {
+  it('maps pinned GraphQL nodes to repo records in pinned order', () => {
+    const repos = pinnedRepos(pinnedResponse([pinnedNode({ name: 'b' }), pinnedNode({ name: 'a', primaryLanguage: null, homepageUrl: '' })]));
+    expect(repos.map((r) => r.name)).toEqual(['b', 'a']);
+    const { fork, ...expected } = repo({ name: 'b' });
+    expect(fork).toBe(false);
+    expect(repos[0]).toEqual(expected);
+    expect(repos[1].language).toBeNull();
+    expect(repos[1].homepage).toBeNull();
   });
 
+  it('returns an empty list for malformed responses', () => {
+    expect(pinnedRepos(null)).toEqual([]);
+    expect(pinnedRepos({ errors: [{ message: 'bad' }] })).toEqual([]);
+    expect(pinnedRepos(pinnedResponse([null, {}]))).toEqual([]);
+  });
+});
+
+describe('fetchPinnedRepos', () => {
+  it('posts the pinned query with the token and returns repos', async () => {
+    let call;
+    const request = async (url, init) => { call = { url, init }; return { ok: true, json: async () => pinnedResponse([pinnedNode()]) }; };
+    const repos = await fetchPinnedRepos('tkn', request);
+    expect(call.url).toBe('https://api.github.com/graphql');
+    expect(call.init.method).toBe('POST');
+    expect(call.init.headers.Authorization).toBe('bearer tkn');
+    expect(JSON.parse(call.init.body).query).toContain('pinnedItems(first: 6, types: REPOSITORY)');
+    expect(repos.map((r) => r.name)).toEqual(['demo']);
+  });
+
+  it('fails without a token or on GraphQL errors', async () => {
+    await expect(fetchPinnedRepos('', async () => ({}))).rejects.toThrow('GITHUB_TOKEN');
+    const failing = async () => ({ ok: true, json: async () => ({ errors: [{ message: 'nope' }] }) });
+    await expect(fetchPinnedRepos('t', failing)).rejects.toThrow('nope');
+    await expect(fetchPinnedRepos('t', async () => ({ ok: false, status: 401 }))).rejects.toThrow('401');
+  });
+});
+
+describe('explorer', () => {
   it('lets the explorer exclude the dynamic featured set', () => {
     const repos = [repo(), repo({ name: 'other', topics: [] })];
     expect(filterExplorerRepos(repos, ['demo']).map((r) => r.name)).toEqual(['other']);
@@ -124,9 +169,9 @@ describe('createFeaturedCard', () => {
 });
 
 describe('buildFeaturedSnapshot', () => {
-  it('keeps only featured repos with safe fields and their founding blocks', async () => {
+  it('keeps given repos in order with safe fields and their founding blocks', async () => {
     const request = async () => ({ ok: true, json: async () => ({ height: 42 }) });
-    const snapshot = await buildFeaturedSnapshot([repo({ extra: 'x' }), repo({ name: 'plain', topics: [] })], request, 1000);
+    const snapshot = await buildFeaturedSnapshot([repo({ extra: 'x' })], request, 1000);
     expect(snapshot).toEqual({
       savedAt: 1000,
       repos: [{
@@ -135,7 +180,7 @@ describe('buildFeaturedSnapshot', () => {
         homepage: 'https://demo.example',
         description: 'A <b>demo</b>',
         language: 'TypeScript',
-        topics: ['featured', 'nostr'],
+        topics: ['nostr'],
         created_at: '2026-10-15T04:47:15Z',
         block: 42,
       }],

@@ -1,5 +1,5 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { buildFeaturedSnapshot } from '../src/catalog.js';
+import { buildFeaturedSnapshot, fetchPinnedRepos } from '../src/catalog.js';
 
 const target = new URL('../public/featured.json', import.meta.url);
 
@@ -14,12 +14,11 @@ async function readPrevious() {
 const previous = await readPrevious();
 
 try {
-  const response = await fetch('https://api.github.com/users/Fierillo/repos?per_page=100&sort=updated');
-  if (!response.ok) throw new Error(`GitHub responded ${response.status}`);
-  const snapshot = await buildFeaturedSnapshot(await response.json(), fetch, Date.now(), previous);
+  const pinned = await fetchPinnedRepos(process.env.GITHUB_TOKEN);
+  const snapshot = await buildFeaturedSnapshot(pinned, fetch, Date.now(), previous);
   await mkdir(new URL('.', target), { recursive: true });
   await writeFile(target, `${JSON.stringify(snapshot, null, 2)}\n`);
-  console.log(`featured snapshot: ${snapshot.repos.length} repos`);
+  console.log(`featured snapshot: ${snapshot.repos.map((repo) => repo.name).join(', ') || 'no pinned repos'}`);
 } catch (error) {
   if (!previous) {
     await writeFile(target, `${JSON.stringify({ savedAt: 0, repos: [] })}\n`);

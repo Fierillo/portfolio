@@ -13,7 +13,7 @@ function featuredProjectArticles() {
 function showcaseRepoNames() {
   return [
     ...new Set(
-      [...html.matchAll(/github\.com\/Fierillo\/([^"\/?#]+)/gi)].map((match) => match[1].toLowerCase()),
+      [...html.matchAll(/github\.com\/Fierillo\/([^"/?#]+)/gi)].map((match) => match[1].toLowerCase()),
     ),
   ].filter((name) =>
     featuredProjectArticles().some((article) => article.toLowerCase().includes(name)),

@@ -72,6 +72,21 @@ The generated site is written to `dist/`.
 pnpm test
 ```
 
+## Featured Descriptions (ES/EN)
+
+Featured cards come from repos tagged with the `featured` GitHub topic. Their Spanish/English descriptions live in `src/featured-i18n.json` (`{ "<repo>": { "source", "es", "en" } }`); a translation is used only while `source` matches the current GitHub description, otherwise the raw description is shown.
+
+To fill in new or changed descriptions locally (not part of the build), using Argos Translate on CPU:
+
+```bash
+python3 -m venv /tmp/argos-venv
+/tmp/argos-venv/bin/pip install argostranslate langdetect
+/tmp/argos-venv/bin/python scripts/translate-featured.py            # repos tagged `featured`
+/tmp/argos-venv/bin/python scripts/translate-featured.py --repos botillo,satoshillo
+```
+
+Existing entries are kept unless their GitHub description changed, so editing the JSON by hand is fine. Commit the result.
+
 ## Deployment
 
 The project is ready for Vercel. Import this repository and use the automatically detected Vite settings:

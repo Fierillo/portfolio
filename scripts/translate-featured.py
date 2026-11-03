@@ -5,6 +5,7 @@ Local-only helper (not part of the build). Uses TranslateGemma 4B (GGUF) through
 local llama.cpp `llama-server` on CPU; only the Python standard library is needed:
   TG_MODEL=/path/model.gguf TG_SERVER=/path/llama-server python3 scripts/translate-featured.py [--repos a,b]
 
+Repos are the pinned ones on GitHub (GraphQL via GITHUB_TOKEN, else `gh api graphql`).
 Only entries that are missing or whose GitHub description ("source") changed are
 translated; hand-edited entries are kept. Terms in PROTECTED are swapped for
 placeholders before translating and restored afterwards.
@@ -40,7 +41,7 @@ TOOLS = Path('/workspace/subtitulador/herramientas')
 MODEL = os.environ.get('TG_MODEL', str(TOOLS / 'modelos/translategemma-4b-it.Q4_K_M.gguf'))
 SERVER = os.environ.get('TG_SERVER', str(TOOLS / 'llama.cpp/build/bin/llama-server'))
 TARGET = Path(__file__).resolve().parent.parent / 'src' / 'featured-i18n.json'
-API = 'https://api.github.com/users/Fierillo/repos?per_page=100&sort=updated'
+PINNED_QUERY = 'query { user(login: "Fierillo") { pinnedItems(first: 6, types: REPOSITORY) { nodes { ... on Repository { name description } } } } }'
 NAMES = {'en': 'English', 'es': 'Spanish'}
 PROMPT = ('<start_of_turn>user\nYou are a professional {src_name} ({src}) to {dst_name} ({dst}) translator. '
           'Your goal is to accurately convey the meaning and nuances of the original text in natural, '
@@ -86,9 +87,17 @@ def detect(text):
 
 
 def fetch_repos():
-    request = urllib.request.Request(API, headers={'Accept': 'application/vnd.github+json'})
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return json.load(response)
+    """Pinned repos, in order, via GITHUB_TOKEN or the local `gh` login."""
+    token = os.environ.get('GITHUB_TOKEN')
+    if token:
+        request = urllib.request.Request('https://api.github.com/graphql', json.dumps({'query': PINNED_QUERY}).encode(),
+                                         {'Authorization': f'bearer {token}', 'Content-Type': 'application/json'})
+        with urllib.request.urlopen(request, timeout=30) as response:
+            body = json.load(response)
+    else:
+        body = json.loads(subprocess.run(['gh', 'api', 'graphql', '-f', f'query={PINNED_QUERY}'],
+                                         check=True, capture_output=True, text=True).stdout)
+    return [node for node in body['data']['user']['pinnedItems']['nodes'] if node]
 
 
 class Translator:
@@ -131,7 +140,7 @@ class Translator:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--repos', help='comma-separated repo names to translate instead of the featured topic')
+    parser.add_argument('--repos', help='comma-separated subset of the pinned repos to translate')
     parser.add_argument('--force', action='store_true', help='retranslate even if the source did not change')
     args = parser.parse_args()
 
@@ -140,7 +149,7 @@ def main():
         wanted = {name.strip().lower() for name in args.repos.split(',')}
         selected = [r for r in repos if r['name'].lower() in wanted]
     else:
-        selected = [r for r in repos if not r.get('fork') and 'featured' in (r.get('topics') or [])]
+        selected = repos
 
     data = json.loads(TARGET.read_text()) if TARGET.exists() else {}
     with Translator() as translator:

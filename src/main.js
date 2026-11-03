@@ -4,12 +4,14 @@ import {
   createFeaturedCard,
   explorerPresentation,
   featuredCardModel,
+  localizeDescriptions,
   pickFeaturedCache,
   filterExplorerRepos,
   moreProjectsCopy,
   resolveLanguage,
   translations,
 } from './catalog.js';
+import featuredI18n from './featured-i18n.json';
 import './styles.css';
 
 inject();
@@ -108,6 +110,7 @@ function applyLanguage(language) {
   document.querySelectorAll('[data-i18n-alt]').forEach((element) => {
     element.alt = text[element.dataset.i18nAlt];
   });
+  localizeDescriptions(document.querySelectorAll('[data-description-es]'), language);
   languageButtons.forEach((button) => {
     button.setAttribute('aria-pressed', String(button.dataset.language === language));
   });
@@ -167,7 +170,13 @@ async function updateBlockHeight() {
 
 function renderFeatured(cache) {
   const cards = cache.repos.map((repo, index) =>
-    createFeaturedCard(featuredCardModel(repo, index + 1), document, translations[currentLanguage], repo.block),
+    createFeaturedCard(
+      featuredCardModel(repo, index + 1, featuredI18n),
+      document,
+      translations[currentLanguage],
+      repo.block,
+      currentLanguage,
+    ),
   );
   featuredNames = cache.repos.map((repo) => repo.name);
   document.querySelector('.project-list').replaceChildren(...cards);

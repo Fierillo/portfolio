@@ -5,6 +5,7 @@ import {
   featuredRepos,
   filterExplorerRepos,
   foundingBlock,
+  localizeDescriptions,
   buildFeaturedSnapshot,
   pickFeaturedCache,
   safeHttpUrl,
@@ -75,7 +76,7 @@ describe('featuredCardModel', () => {
     expect(model).toMatchObject({
       index: '02',
       name: 'demo',
-      description: 'A <b>demo</b>',
+      descriptions: { es: 'A <b>demo</b>', en: 'A <b>demo</b>' },
       tags: ['TypeScript', 'nostr'],
       repoUrl: 'https://github.com/Fierillo/demo',
       projectUrl: 'https://demo.example',
@@ -159,5 +160,30 @@ describe('pickFeaturedCache', () => {
   it('ignores missing or malformed caches', () => {
     expect(pickFeaturedCache(snap(1), 'garbage').savedAt).toBe(1);
     expect(pickFeaturedCache(null, { savedAt: 5, repos: 'x' })).toEqual({ savedAt: 0, repos: [] });
+  });
+});
+
+describe('bilingual featured descriptions', () => {
+  const i18n = { demo: { source: 'A <b>demo</b>', es: 'Una demo', en: 'A demo' } };
+
+  it('uses the local translation when its source matches GitHub', () => {
+    expect(featuredCardModel(repo(), 1, i18n).descriptions).toEqual({ es: 'Una demo', en: 'A demo' });
+  });
+
+  it('falls back to the raw GitHub description when missing or outdated', () => {
+    const raw = { es: 'A <b>demo</b>', en: 'A <b>demo</b>' };
+    expect(featuredCardModel(repo(), 1).descriptions).toEqual(raw);
+    expect(featuredCardModel(repo(), 1, { demo: { source: 'old', es: 'x', en: 'y' } }).descriptions).toEqual(raw);
+    expect(featuredCardModel(repo(), 1, { demo: { source: 'A <b>demo</b>', es: 'Una demo' } }).descriptions.en).toBe('A <b>demo</b>');
+  });
+
+  it('renders the current language and switches with textContent', () => {
+    const card = createFeaturedCard(featuredCardModel(repo(), 1, i18n), fakeDocument(), translations.en, null, 'en');
+    const paragraph = walk(card).find((n) => n.tagName === 'p');
+    expect(paragraph.textContent).toBe('A demo');
+    localizeDescriptions([paragraph], 'es');
+    expect(paragraph.textContent).toBe('Una demo');
+    localizeDescriptions([paragraph], 'en');
+    expect(paragraph.textContent).toBe('A demo');
   });
 });

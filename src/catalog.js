@@ -159,12 +159,28 @@ export function featuredRepos(repos) {
   return repos.filter((repo) => !repo.fork && Array.isArray(repo.topics) && repo.topics.includes('featured'));
 }
 
-export function featuredCardModel(repo, position) {
+function localizedDescriptions(repo, i18n) {
+  const raw = repo.description || '';
+  const entry = i18n[repo.name];
+  const usable = entry && entry.source === repo.description;
+  return Object.fromEntries(
+    ['es', 'en'].map((lang) => [lang, usable && typeof entry[lang] === 'string' && entry[lang] ? entry[lang] : raw]),
+  );
+}
+
+export function localizeDescriptions(nodes, lang) {
+  const key = lang === 'en' ? 'descriptionEn' : 'descriptionEs';
+  nodes.forEach((node) => {
+    node.textContent = node.dataset[key];
+  });
+}
+
+export function featuredCardModel(repo, position, i18n = {}) {
   const repoUrl = safeHttpUrl(repo.html_url) || PROFILE_URL;
   return {
     index: String(position).padStart(2, '0'),
     name: repo.name,
-    description: repo.description || '',
+    descriptions: localizedDescriptions(repo, i18n),
     tags: [repo.language, ...repo.topics.filter((topic) => topic !== 'featured')].filter(Boolean),
     repoUrl,
     projectUrl: safeHttpUrl(repo.homepage) || repoUrl,
@@ -203,7 +219,7 @@ function externalLink(doc, href, key, label) {
   return link;
 }
 
-export function createFeaturedCard(model, doc, text, block = null) {
+export function createFeaturedCard(model, doc, text, block = null, lang = 'es') {
   const article = element(doc, 'article', 'project reveal');
   const identity = element(doc, 'div', 'project__identity');
   const tags = element(doc, 'ul');
@@ -211,7 +227,10 @@ export function createFeaturedCard(model, doc, text, block = null) {
   tags.append(...model.tags.map((tag) => element(doc, 'li', '', tag)));
   identity.append(element(doc, 'h3', '', model.name), tags);
 
-  const description = element(doc, 'p', '', model.description);
+  const description = element(doc, 'p');
+  description.dataset.descriptionEs = model.descriptions.es;
+  description.dataset.descriptionEn = model.descriptions.en;
+  localizeDescriptions([description], lang);
 
   const blockLabel = element(doc, 'span', '', text.foundedBlock);
   blockLabel.dataset.i18n = 'foundedBlock';

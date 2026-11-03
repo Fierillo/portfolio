@@ -2,17 +2,17 @@
   "Futbolcillo": {
     "source": "Minimalist turn-based 2D football game - Pool style physics",
     "en": "Minimalist turn-based 2D football game - Pool style physics",
-    "es": "Juego de fútbol 2D basado en el turno mínimo - Física de estilo de piscina"
+    "es": "Juego de fútbol 2D en turnos, estilo minimalista, con física similar a la de un billar."
   },
   "botillo": {
     "source": "Bitcoin bot for Discord and Telegram with price tracking, prediction rounds, leaderboards, automated updates, and Lightning payments via NWC.",
     "en": "Bitcoin bot for Discord and Telegram with price tracking, prediction rounds, leaderboards, automated updates, and Lightning payments via NWC.",
-    "es": "Bitcoin bot for Discord and Telegram con seguimiento de precios, rondas de predicción, tablas de clasificación, actualizaciones automatizadas y pagos Lightning a través de NWC."
+    "es": "Bot de Bitcoin para Discord y Telegram con seguimiento de precios, rondas de predicción, tablas de clasificación, actualizaciones automáticas y pagos Lightning a través de NWC."
   },
   "clipcillo": {
     "source": "A simple clip editor with automatic subtitle transcription, silent detector and another interesting things...",
     "en": "A simple clip editor with automatic subtitle transcription, silent detector and another interesting things...",
-    "es": "Un simple editor de clips con transcripción automática de subtítulos, detector silencioso y otras cosas interesantes..."
+    "es": "Un editor de clips sencillo con transcripción automática de subtítulos, detector de silencios y otras cosas interesantes..."
   },
   "monitorcillo": {
     "source": "Monitor macroeconómico de la Argentina, actualizado con fuentes oficiales y diseñado para leer datos rápido.",
@@ -22,16 +22,16 @@
   "satoshillo": {
     "source": "Browser extension that converts ARS, USD, EUR and JPY prices into satoshis (BTC) on any web page.",
     "en": "Browser extension that converts ARS, USD, EUR and JPY prices into satoshis (BTC) on any web page.",
-    "es": "Extensión del navegador que convierte los precios de ARS, USD, EUR y JPY en satoshis (BTC) en cualquier página web."
+    "es": "Extensión de navegador que convierte los precios en ARS, USD, EUR y JPY en satoshis (BTC) en cualquier página web."
   },
   "totemcillo": {
     "source": "La Crypta's totem screen: publish live Nostr notes tagging (#) or zap the existent posts",
     "en": "La Crypta's totem screen: publish live Nostr notes tagging (#) or zap the existent posts",
-    "es": "Pantalla totem de La Crypta: publicar notas Nostr en vivo etiquetando (#) o zapar las entradas existentes"
+    "es": "Pantalla tótem de La Crypta: publicá notas de Nostr en vivo con etiquetas (#) o zapeá las publicaciones existentes."
   },
   "workshopillo-wallets": {
     "source": "Web presentation for La Crypta's Lightning wallets workshop: Bitcoin and Lightning explained with animations, key custody, and a wallet comparison.",
     "en": "Web presentation for La Crypta's Lightning wallets workshop: Bitcoin and Lightning explained with animations, key custody, and a wallet comparison.",
-    "es": "Presentación web para el taller de carteras Lightning de La Crypta: Bitcoin y Lightning explicado con animaciones, custodia clave y una comparación de cartera."
+    "es": "Presentación web del taller de wallets Lightning de La Crypta: Bitcoin y Lightning explicados con animaciones, custodia de claves y una comparación de wallets."
   }
 }

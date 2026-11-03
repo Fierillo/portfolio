@@ -1,12 +1,18 @@
+export function safeHttpUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' || url.protocol === 'http:' ? value : null;
+  } catch {
+    return null;
+  }
+}
+
 export async function updateProjectHomepage(link, request = fetch) {
   try {
     const response = await request(`https://api.github.com/repos/${link.dataset.projectRepo}`);
     if (!response.ok) return;
-    const repo = await response.json();
-    const homepage = new URL(repo.homepage);
-    if (homepage.protocol === 'https:' || homepage.protocol === 'http:') {
-      link.href = repo.homepage;
-    }
+    const homepage = safeHttpUrl((await response.json()).homepage);
+    if (homepage) link.href = homepage;
   } catch {
     // Keep the repository fallback when GitHub or Website is unavailable.
   }
@@ -148,8 +154,8 @@ export function resolveLanguage(stored) {
   return stored === 'en' ? 'en' : 'es';
 }
 
-export function filterExplorerRepos(repos) {
-  const featured = new Set(FEATURED_REPOS);
+export function filterExplorerRepos(repos, featuredNames = FEATURED_REPOS) {
+  const featured = new Set(featuredNames.map((name) => name.toLowerCase()));
   return repos.filter((repo) => !repo.fork && !featured.has(repo.name.toLowerCase()));
 }
 
@@ -198,4 +204,96 @@ export function explorerPresentation(state, repos, text) {
     cards: [],
     fallback: null,
   };
+}
+
+const DESCRIPTION_KEYS = Object.freeze({
+  monitorcillo: 'monitorDescription',
+  futbolcillo: 'footballDescription',
+  satoshillo: 'satsDescription',
+  clipcillo: 'clipDescription',
+  botillo: 'botDescription',
+  'workshopillo-wallets': 'workshopDescription',
+  totemcillo: 'totemDescription',
+});
+
+const PROFILE_URL = 'https://github.com/Fierillo';
+
+export function featuredRepos(repos) {
+  if (!Array.isArray(repos)) return [];
+  return repos.filter((repo) => !repo.fork && Array.isArray(repo.topics) && repo.topics.includes('featured'));
+}
+
+export function featuredCardModel(repo, position) {
+  const repoUrl = safeHttpUrl(repo.html_url) || PROFILE_URL;
+  return {
+    index: String(position).padStart(2, '0'),
+    name: repo.name,
+    description: repo.description || '',
+    descriptionKey: DESCRIPTION_KEYS[repo.name.toLowerCase()] || null,
+    tags: [repo.language, ...repo.topics.filter((topic) => topic !== 'featured')].filter(Boolean),
+    repoUrl,
+    projectUrl: safeHttpUrl(repo.homepage) || repoUrl,
+    createdAt: repo.created_at,
+  };
+}
+
+export async function foundingBlock(createdAt, request = fetch) {
+  const time = Date.parse(createdAt);
+  if (Number.isNaN(time)) return null;
+  try {
+    const response = await request(`https://mempool.space/api/v1/mining/blocks/timestamp/${Math.floor(time / 1000)}`);
+    if (!response.ok) return null;
+    const { height } = await response.json();
+    return Number.isInteger(height) ? height : null;
+  } catch {
+    return null;
+  }
+}
+
+function element(doc, tag, className, textContent) {
+  const node = doc.createElement(tag);
+  if (className) node.className = className;
+  if (textContent !== undefined) node.textContent = textContent;
+  return node;
+}
+
+function externalLink(doc, href, key, label) {
+  const link = element(doc, 'a');
+  link.href = href;
+  link.target = '_blank';
+  link.rel = 'noreferrer';
+  const span = element(doc, 'span', '', label);
+  span.dataset.i18n = key;
+  link.append(span, element(doc, 'span', '', ' ↗'));
+  return link;
+}
+
+export function createFeaturedCard(model, doc, text, block = null) {
+  const article = element(doc, 'article', 'project reveal');
+  const identity = element(doc, 'div', 'project__identity');
+  const tags = element(doc, 'ul');
+  tags.setAttribute('aria-label', model.name);
+  tags.append(...model.tags.map((tag) => element(doc, 'li', '', tag)));
+  identity.append(element(doc, 'h3', '', model.name), tags);
+
+  const description = element(doc, 'p', '', model.descriptionKey ? text[model.descriptionKey] : model.description);
+  if (model.descriptionKey) description.dataset.i18n = model.descriptionKey;
+
+  const blockLabel = element(doc, 'span', '', text.foundedBlock);
+  blockLabel.dataset.i18n = 'foundedBlock';
+  const blockInfo = element(doc, 'span', 'project__block');
+  blockInfo.append(blockLabel, element(doc, 'span', '', block === null ? '' : ` ${block}`));
+  blockInfo.hidden = block === null;
+
+  const links = element(doc, 'div', 'project__links');
+  links.append(
+    externalLink(doc, model.projectUrl, 'viewProject', text.viewProject),
+    externalLink(doc, model.repoUrl, 'viewCode', text.viewCode),
+    blockInfo,
+  );
+
+  const detail = element(doc, 'div', 'project__detail');
+  detail.append(description, links);
+  article.append(element(doc, 'span', 'project__index', model.index), identity, detail);
+  return article;
 }

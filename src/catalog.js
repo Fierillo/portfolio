@@ -154,52 +154,9 @@ export function explorerPresentation(state, repos, text) {
 
 const PROFILE_URL = 'https://github.com/Fierillo';
 
-const PINNED_QUERY = `query {
-  user(login: "Fierillo") {
-    pinnedItems(first: 6, types: REPOSITORY) {
-      nodes {
-        ... on Repository {
-          name
-          url
-          homepageUrl
-          description
-          createdAt
-          primaryLanguage { name }
-          repositoryTopics(first: 20) { nodes { topic { name } } }
-        }
-      }
-    }
-  }
-}`;
-
-export function pinnedRepos(response) {
-  const nodes = response?.data?.user?.pinnedItems?.nodes;
-  if (!Array.isArray(nodes)) return [];
-  return nodes
-    .filter((node) => node && typeof node.name === 'string')
-    .map((node) => ({
-      name: node.name,
-      html_url: node.url ?? null,
-      homepage: node.homepageUrl || null,
-      description: node.description ?? null,
-      language: node.primaryLanguage?.name ?? null,
-      topics: (node.repositoryTopics?.nodes || []).map((item) => item?.topic?.name).filter(Boolean),
-      created_at: node.createdAt ?? null,
-    }));
-}
-
-// Server-side only (prebuild): the GraphQL API requires a token that must never reach the browser.
-export async function fetchPinnedRepos(token, request = fetch) {
-  if (!token) throw new Error('GITHUB_TOKEN is not set');
-  const response = await request('https://api.github.com/graphql', {
-    method: 'POST',
-    headers: { Authorization: `bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query: PINNED_QUERY }),
-  });
-  if (!response.ok) throw new Error(`GitHub GraphQL responded ${response.status}`);
-  const body = await response.json();
-  if (body.errors?.length) throw new Error(body.errors.map((error) => error.message).join('; '));
-  return pinnedRepos(body);
+export function featuredRepos(repos) {
+  if (!Array.isArray(repos)) return [];
+  return repos.filter((repo) => !repo.fork && Array.isArray(repo.topics) && repo.topics.includes('featured'));
 }
 
 function localizedDescriptions(repo, i18n) {
@@ -224,7 +181,7 @@ export function featuredCardModel(repo, position, i18n = {}) {
     index: String(position).padStart(2, '0'),
     name: repo.name,
     descriptions: localizedDescriptions(repo, i18n),
-    tags: [repo.language, ...(repo.topics || [])].filter(Boolean),
+    tags: [repo.language, ...repo.topics.filter((topic) => topic !== 'featured')].filter(Boolean),
     repoUrl,
     projectUrl: safeHttpUrl(repo.homepage) || repoUrl,
     createdAt: repo.created_at,
@@ -298,7 +255,7 @@ const SNAPSHOT_FIELDS = ['name', 'html_url', 'homepage', 'description', 'languag
 
 export async function buildFeaturedSnapshot(repos, request = fetch, savedAt = Date.now(), previous = null) {
   const knownBlocks = new Map((previous?.repos || []).map((repo) => [repo.name, repo.block]));
-  const featured = Array.isArray(repos) ? repos : [];
+  const featured = featuredRepos(repos);
   const blocks = await Promise.all(
     featured.map((repo) =>
       Number.isInteger(knownBlocks.get(repo.name)) ? knownBlocks.get(repo.name) : foundingBlock(repo.created_at, request),

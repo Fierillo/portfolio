@@ -27,9 +27,10 @@ The site is designed as a small pixel-art world rather than a conventional portf
 - [Clipcillo](https://github.com/Fierillo/clipcillo): a clip editor with automatic subtitle transcription, silence detection, and AI-assisted editing tools.
 - [Workshopillo Wallets](https://github.com/Fierillo/workshopillo-wallets): an interactive workshop to understand Bitcoin Lightning and use your first wallet.
 
-Every featured project's demo link uses its repository's Website as captured in the
-build-time snapshot (see below), so changing Website takes effect on the next deploy.
-If Website is missing, the link opens the repository instead. Source and release-download links stay separate.
+Every featured project's demo link reads its repository's Website from the public
+GitHub API on page load. Changing Website updates the destination without editing
+or redeploying the portfolio. If GitHub is unavailable or Website is missing, the
+link opens the repository instead. Source and release-download links stay separate.
 
 ## Features
 
@@ -73,26 +74,14 @@ pnpm test
 
 ## Featured Descriptions (ES/EN)
 
-Featured cards are the repos pinned on the [GitHub profile](https://github.com/Fierillo) (max 6, in pinned order). Pinned repos are only available through the GitHub GraphQL API, which needs a token, so they are fetched at build time by `scripts/featured-snapshot.js` (`prebuild`) into `public/featured.json`; the browser only reads that snapshot (plus its localStorage copy) and never sees the token. The "more projects" list excludes the pinned repos. Without `GITHUB_TOKEN`, or if GitHub fails, the build warns and keeps the previous snapshot (or an empty list) instead of failing.
-
-### `GITHUB_TOKEN` on Vercel
-
-1. On GitHub: Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token. Resource owner: your account; Repository access: **Public repositories (read-only)**; no extra permissions. Pick an expiration and copy the token.
-2. On Vercel: Project → Settings → Environment Variables → add `GITHUB_TOKEN` with that value for Production and Preview (mark it Sensitive).
-3. Redeploy. The build log shows `featured snapshot: <repo names>`. Re-pinning repos takes effect on the next deploy.
-
-Locally: `GITHUB_TOKEN=$(gh auth token) pnpm build`.
-
-### Translations
-
-Their Spanish/English descriptions live in `src/featured-i18n.json` (`{ "<repo>": { "source", "es", "en" } }`); a translation is used only while `source` matches the current GitHub description, otherwise the raw description is shown.
+Featured cards come from repos tagged with the `featured` GitHub topic. Their Spanish/English descriptions live in `src/featured-i18n.json` (`{ "<repo>": { "source", "es", "en" } }`); a translation is used only while `source` matches the current GitHub description, otherwise the raw description is shown.
 
 To fill in new or changed descriptions locally (not part of the build), using [TranslateGemma 4B](https://huggingface.co/google/translategemma-4b-it) (GGUF) through a local llama.cpp `llama-server` on CPU. Only the Python standard library is needed; point `TG_MODEL` / `TG_SERVER` at your model and binary (defaults are the author's local paths). The source language is detected and translated en→es or es→en:
 
 ```bash
 export TG_MODEL=/path/to/translategemma-4b-it.Q4_K_M.gguf
 export TG_SERVER=/path/to/llama.cpp/build/bin/llama-server
-python3 scripts/translate-featured.py                          # pinned repos (GITHUB_TOKEN or `gh` login)
+python3 scripts/translate-featured.py                          # repos tagged `featured`
 python3 scripts/translate-featured.py --repos botillo,satoshillo
 python3 scripts/translate-featured.py --repos botillo --force  # retranslate unchanged entries
 python3 scripts/test_translate_featured.py                     # unit tests

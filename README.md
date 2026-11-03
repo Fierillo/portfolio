@@ -76,14 +76,18 @@ pnpm test
 
 Featured cards come from repos tagged with the `featured` GitHub topic. Their Spanish/English descriptions live in `src/featured-i18n.json` (`{ "<repo>": { "source", "es", "en" } }`); a translation is used only while `source` matches the current GitHub description, otherwise the raw description is shown.
 
-To fill in new or changed descriptions locally (not part of the build), using Argos Translate on CPU:
+To fill in new or changed descriptions locally (not part of the build), using [TranslateGemma 4B](https://huggingface.co/google/translategemma-4b-it) (GGUF) through a local llama.cpp `llama-server` on CPU. Only the Python standard library is needed; point `TG_MODEL` / `TG_SERVER` at your model and binary (defaults are the author's local paths). The source language is detected and translated en→es or es→en:
 
 ```bash
-python3 -m venv /tmp/argos-venv
-/tmp/argos-venv/bin/pip install argostranslate langdetect
-/tmp/argos-venv/bin/python scripts/translate-featured.py            # repos tagged `featured`
-/tmp/argos-venv/bin/python scripts/translate-featured.py --repos botillo,satoshillo
+export TG_MODEL=/path/to/translategemma-4b-it.Q4_K_M.gguf
+export TG_SERVER=/path/to/llama.cpp/build/bin/llama-server
+python3 scripts/translate-featured.py                          # repos tagged `featured`
+python3 scripts/translate-featured.py --repos botillo,satoshillo
+python3 scripts/translate-featured.py --repos botillo --force  # retranslate unchanged entries
+python3 scripts/test_translate_featured.py                     # unit tests
 ```
+
+Terms the model tends to translate (wallet/wallets, zap/zaps, totem, "totem screen" → "pantalla tótem", "zap" → "zapear") are listed in `PROTECTED` at the top of the script: they are swapped for placeholders before translating and restored afterwards. Names it keeps on its own (La Crypta, Lightning, Nostr, Bitcoin, NWC, Discord, Telegram) are in `KEEP` and passed in the prompt. If the model drops a placeholder, the text is retranslated without them and `GLOSSARY` fixes are applied. Review the output before committing.
 
 Existing entries are kept unless their GitHub description changed, so editing the JSON by hand is fine. Commit the result.
 

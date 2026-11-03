@@ -297,3 +297,32 @@ export function createFeaturedCard(model, doc, text, block = null) {
   article.append(element(doc, 'span', 'project__index', model.index), identity, detail);
   return article;
 }
+
+const SNAPSHOT_FIELDS = ['name', 'html_url', 'homepage', 'description', 'language', 'topics', 'created_at'];
+
+export async function buildFeaturedSnapshot(repos, request = fetch, savedAt = Date.now(), previous = null) {
+  const knownBlocks = new Map((previous?.repos || []).map((repo) => [repo.name, repo.block]));
+  const featured = featuredRepos(repos);
+  const blocks = await Promise.all(
+    featured.map((repo) =>
+      Number.isInteger(knownBlocks.get(repo.name)) ? knownBlocks.get(repo.name) : foundingBlock(repo.created_at, request),
+    ),
+  );
+  return {
+    savedAt,
+    repos: featured.map((repo, index) => ({
+      ...Object.fromEntries(SNAPSHOT_FIELDS.map((field) => [field, repo[field] ?? null])),
+      block: blocks[index],
+    })),
+  };
+}
+
+const EMPTY_CACHE = Object.freeze({ savedAt: 0, repos: [] });
+
+function validCache(cache) {
+  return Boolean(cache) && Number.isFinite(cache.savedAt) && Array.isArray(cache.repos);
+}
+
+export function pickFeaturedCache(...caches) {
+  return caches.filter(validCache).reduce((best, cache) => (cache.savedAt > best.savedAt ? cache : best), EMPTY_CACHE);
+}

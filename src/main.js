@@ -1,6 +1,10 @@
 import { inject } from '@vercel/analytics';
 import {
+  createFeaturedCard,
   explorerPresentation,
+  featuredCardModel,
+  featuredRepos,
+  foundingBlock,
   filterExplorerRepos,
   moreProjectsCopy,
   updateProjectHomepage,
@@ -27,6 +31,12 @@ let currentLanguage = resolveLanguage(localStorage.getItem('fierillolandia-langu
 let projectsLoaded = false;
 let loadedRepos = [];
 let projectsState = 'idle';
+let featuredNames;
+const reposRequest = fetch('https://api.github.com/users/Fierillo/repos?per_page=100&sort=updated').then((response) => {
+  if (!response.ok) throw new Error(`GitHub responded ${response.status}`);
+  return response.json();
+});
+reposRequest.catch(() => {});
 
 function createRepoCard(card) {
   const link = document.createElement('a');
@@ -115,10 +125,7 @@ async function loadMoreProjects() {
   renderProjectExplorer();
 
   try {
-    const response = await fetch('https://api.github.com/users/Fierillo/repos?per_page=100&sort=updated');
-    if (!response.ok) throw new Error(`GitHub responded ${response.status}`);
-
-    loadedRepos = filterExplorerRepos(await response.json());
+    loadedRepos = filterExplorerRepos(await reposRequest, featuredNames);
     projectsState = 'loaded';
     projectsLoaded = true;
   } catch {
@@ -162,6 +169,27 @@ async function updateBlockHeight() {
   }
 }
 
+async function loadFeaturedProjects() {
+  try {
+    const repos = featuredRepos(await reposRequest);
+    if (repos.length === 0) return;
+
+    const models = repos.map((repo, index) => featuredCardModel(repo, index + 1));
+    const blocks = await Promise.all(models.map((model) => foundingBlock(model.createdAt)));
+    const cards = models.map((model, index) =>
+      createFeaturedCard(model, document, translations[currentLanguage], blocks[index]),
+    );
+    featuredNames = repos.map((repo) => repo.name);
+    document.querySelector('.project-list').replaceChildren(...cards);
+    cards.forEach((card) => observer.observe(card));
+    if (projectsLoaded) loadedRepos = filterExplorerRepos(await reposRequest, featuredNames);
+    applyLanguage(currentLanguage);
+  } catch {
+    // Keep the static featured cards when GitHub is unavailable.
+  }
+}
+
 document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
 applyLanguage(currentLanguage);
 updateBlockHeight();
+loadFeaturedProjects();

@@ -5,6 +5,8 @@ import {
   featuredRepos,
   filterExplorerRepos,
   foundingBlock,
+  buildFeaturedSnapshot,
+  pickFeaturedCache,
   safeHttpUrl,
   translations,
 } from './catalog.js';
@@ -123,5 +125,45 @@ describe('createFeaturedCard', () => {
     const block = walk(card).find((n) => n.className === 'project__block');
     expect(block.hidden).toBe(false);
     expect(walk(block).some((n) => n.textContent === ' 971511')).toBe(true);
+  });
+});
+
+describe('buildFeaturedSnapshot', () => {
+  it('keeps only featured repos with safe fields and their founding blocks', async () => {
+    const request = async () => ({ ok: true, json: async () => ({ height: 42 }) });
+    const snapshot = await buildFeaturedSnapshot([repo({ extra: 'x' }), repo({ name: 'plain', topics: [] })], request, 1000);
+    expect(snapshot).toEqual({
+      savedAt: 1000,
+      repos: [{
+        name: 'demo',
+        html_url: 'https://github.com/Fierillo/demo',
+        homepage: 'https://demo.example',
+        description: 'A <b>demo</b>',
+        language: 'TypeScript',
+        topics: ['featured', 'nostr'],
+        created_at: '2026-10-15T04:47:15Z',
+        block: 42,
+      }],
+    });
+  });
+
+  it('reuses known blocks instead of asking mempool again', async () => {
+    const request = async () => { throw new Error('should not be called'); };
+    const snapshot = await buildFeaturedSnapshot([repo()], request, 1, { savedAt: 0, repos: [{ name: 'demo', block: 7 }] });
+    expect(snapshot.repos[0].block).toBe(7);
+  });
+});
+
+describe('pickFeaturedCache', () => {
+  const snap = (savedAt) => ({ savedAt, repos: [repo({ block: null })] });
+
+  it('prefers the newest valid cache', () => {
+    expect(pickFeaturedCache(snap(1), snap(2)).savedAt).toBe(2);
+    expect(pickFeaturedCache(snap(3), snap(2)).savedAt).toBe(3);
+  });
+
+  it('ignores missing or malformed caches', () => {
+    expect(pickFeaturedCache(snap(1), 'garbage').savedAt).toBe(1);
+    expect(pickFeaturedCache(null, { savedAt: 5, repos: 'x' })).toEqual({ savedAt: 0, repos: [] });
   });
 });

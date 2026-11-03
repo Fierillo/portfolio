@@ -19,6 +19,11 @@
     "es": "Monitor macroeconómico de la Argentina, actualizado con fuentes oficiales y diseñado para leer datos rápido.",
     "en": "Argentina's macroeconomic monitor, updated with official sources and designed to read data quickly."
   },
+  "portfolio": {
+    "source": "Welcome to Fierillo's personal portfolio",
+    "en": "Welcome to Fierillo's personal portfolio",
+    "es": "Bienvenido al portafolio personal de Fierillo"
+  },
   "satoshillo": {
     "source": "Browser extension that converts ARS, USD, EUR and JPY prices into satoshis (BTC) on any web page.",
     "en": "Browser extension that converts ARS, USD, EUR and JPY prices into satoshis (BTC) on any web page.",
